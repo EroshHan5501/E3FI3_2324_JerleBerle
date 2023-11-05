@@ -25,11 +25,8 @@ namespace RecipeClient.Model
         private User(
             string username,
             string email,
-            string password)
+            string password) : base(++ObjectCounter)
         {
-            ObjectCounter += 1;
-
-            Id = ObjectCounter;
             Username = username;
             Email = email;
             Password = password;

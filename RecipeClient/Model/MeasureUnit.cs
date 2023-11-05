@@ -6,11 +6,8 @@ public class MeasureUnit : ModelBase
 
     public string Name { get; }
 
-    private MeasureUnit(string name)
+    private MeasureUnit(string name) : base(++ObjectCounter)
     {
-        ObjectCounter += 1;
-
-        Id = ObjectCounter;
         Name = name.Trim();
     }
 

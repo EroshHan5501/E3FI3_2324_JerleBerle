@@ -18,11 +18,8 @@ namespace RecipeClient.Model
 
         public User User { get; }
 
-        private Recipe(string title, string? description, User user)
+        private Recipe(string title, string? description, User user) : base(++ObjectCounter)
         {
-            ObjectCounter += 1;
-
-            Id = ObjectCounter;
             Title = title;
             CreatedAt = DateTime.Now; // This has to be UTC for web api 
             Description = description;

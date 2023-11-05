@@ -8,11 +8,8 @@
 
         public uint Amount { get; set; }
 
-        private Ingredient(string name, uint amount)
+        private Ingredient(string name, uint amount) : base(++ObjectCounter)
         {
-            ObjectCounter += 1;
-
-            Id = ObjectCounter;
             Name = name.Trim();
             Amount = amount;
         }
