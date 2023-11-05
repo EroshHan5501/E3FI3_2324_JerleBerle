@@ -49,7 +49,9 @@ namespace RecipeClient.Database.InMemory
 
         public void Update(User entity)
         {
-            int index = Users.IndexOf(entity);
+
+            User user = GetSingle(x => x.Id == entity.Id);
+            int index = Users.IndexOf(user);
 
             if (index == -1)
             {
