@@ -9,6 +9,8 @@ namespace RecipeClient.Auth
     {
         private static ClaimsPrincipal? Principal { get; set; }
 
+        public static bool IsAuthenticated => Principal is not null;
+
         public static void Add(User user)
         {
             ClaimsPrincipal principal = new ClaimsPrincipal();

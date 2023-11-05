@@ -6,7 +6,7 @@
         xmlns:view="clr-namespace:RecipeClient.View" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <view:LoginView/>
+    <Grid x:Name="RootGrid">
+        
     </Grid>
 </Window>

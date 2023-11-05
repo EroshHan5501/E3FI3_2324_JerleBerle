@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace RecipeClient.Database.InMemory
 {
+    // I think we can model this better to use only a single class with a generic type 
     internal class InMemIngredientRepository : IRepository<Ingredient>
     {
         public List<Ingredient> Ingredients { get; } = new List<Ingredient>();

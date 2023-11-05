@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using RecipeClient.Auth;
+using RecipeClient.View;
+
+using System.Windows;
 
 namespace RecipeClient
 {
@@ -10,6 +13,8 @@ namespace RecipeClient
         public MainWindow()
         {
             InitializeComponent();
+            RootGrid.Children.Add(new MainView());
         }
+
     }
 }
