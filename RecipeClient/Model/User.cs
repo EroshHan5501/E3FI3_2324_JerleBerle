@@ -10,16 +10,10 @@ namespace RecipeClient.Model
     {
         private static int ObjectCounter { get; set; } = 0;
 
-        [Required]
-        [StringLength(50)]
         public string Username { get; private set; }
 
-        [Required]
-        [EmailAddress(ErrorMessage = "Please provide a valid email address!")]
         public string Email { get; private set; }
 
-        [Required]
-        [MinLength(12, ErrorMessage = "Password needs min length of 12!")]
         public string Password { get; private set; }
 
         private User(
