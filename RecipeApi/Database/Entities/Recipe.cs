@@ -12,6 +12,7 @@ public class Recipe : IKeyEntity
 
     public string Title { get; set; }
 
+    [Column("createdAt")]
     public DateTime StartedAt { get; set; }
 
     public string Description { get; set; }

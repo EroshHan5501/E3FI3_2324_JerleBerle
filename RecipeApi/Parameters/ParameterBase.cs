@@ -14,9 +14,11 @@ namespace RecipeApi.Parameters
 
         public IEnumerable<Func<TEntity, bool>> ParseTo()
         {
+            Func<TEntity, bool> defaultFilter = (TEntity entity) => true;
+
             if (Parameters is null)
             {
-                yield return (TEntity entity) => true;
+                yield return defaultFilter;
                 yield break;
             }
 
@@ -50,7 +52,7 @@ namespace RecipeApi.Parameters
 
             if (count == 0)
             {
-                yield return e => true;
+                yield return defaultFilter;
             }
         }
     }

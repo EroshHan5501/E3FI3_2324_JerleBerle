@@ -23,7 +23,7 @@ public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
 
         foreach (Func<Recipe, bool> filter in filters)
         {
-            query = (IQueryable<Recipe>)query.Where(filter);
+            query = query.Where(filter).AsQueryable();
         }
 
         return Ok(query);
