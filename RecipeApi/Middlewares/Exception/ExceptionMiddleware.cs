@@ -1,6 +1,7 @@
 using System.Net;
 using RecipeApi.Database;
 using RecipeApi.Exceptions;
+using RecipeApi.Responses;
 
 namespace RecipeApi.Middlewares;
 

@@ -2,17 +2,17 @@
 
 using RecipeApi.Database;
 
-namespace RecipeApi.Endpoints
+namespace RecipeApi.Endpoints;
+
+[ApiController]
+[Route("api/[controller]")]
+public abstract class RecipeBaseController : ControllerBase
 {
-    [ApiController]
-    public abstract class RecipeBaseController : ControllerBase
+    public RecipeDbContext DbContext { get; set; }  
+
+    public RecipeBaseController(RecipeDbContext dbContext)
     {
-        public IDbContext DbContext { get; }
-
-        public RecipeBaseController(IDbContext dbContext)
-        {
-            DbContext = dbContext;
-        }
-
+        DbContext = dbContext;
     }
+
 }

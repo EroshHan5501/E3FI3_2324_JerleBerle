@@ -1,94 +1,40 @@
-
-using System.Collections;
-using System.Data;
-using System.Data.Common;
-using MySqlConnector;
+﻿using Microsoft.EntityFrameworkCore;
 
 using RecipeApi.Database.Entities;
 
 namespace RecipeApi.Database;
 
-internal class RecipeDbContext : IDbContext, IDisposable
+public class RecipeDbContext : DbContext
 {
-    public DbConnection Connection { get; }
+    public DbSet<User> Users { get; set; }
 
-    private DbDataReader? DbReader { get; set; }
+    public DbSet<Recipe> Recipes { get; set; }
 
-    public string ConnectionString => "Server=localhost;Database=recipeappdb;Uid=vector;Pwd=K/]zjUT)({?Xbdy?<+YEpsNzB38,*0$rc7DiAqvL";
+    public DbSet<Ingredient> Ingredients { get; set; }  
 
-    public RecipeDbContext() {
+    public DbSet<MeasureUnit> MeasureUnits { get; set; }
 
-        Connection = new MySqlConnection(ConnectionString);
-
-        CreateConnection();
-    }
-
-    public void CreateConnection()
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (Connection.State != ConnectionState.Open) {
-            Connection.Open();
-        }
+        optionsBuilder.UseMySql(
+            "server=localhost;port=3306;database=recipeappdb;user=vector;password=K/]zjUT)({?Xbdy?<+YEpsNzB38,*0$rc7DiAqvL",
+            new MariaDbServerVersion(new Version(11, 1, 0)));
     }
 
-    public void ExecuteNonQuery(string query)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        using DbCommand command = Connection.CreateCommand();
-        command.CommandText = query;
-        command.ExecuteNonQuery();
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>()
+            .HasMany(x => x.Recipes)
+            .WithOne(x => x.User);
+
+        modelBuilder.Entity<Recipe>()
+            .HasMany(x => x.Ingredients)
+            .WithMany(x => x.Recipes);
+
+        modelBuilder.Entity<Ingredient>()
+            .HasMany(x => x.MeasureUnits)
+            .WithMany(x => x.Ingredients);
     }
-
-    public async Task ExecuteNonQueryAsync(string query)
-    {
-        using DbCommand command = Connection.CreateCommand();
-        command.CommandText = query;
-        await command.ExecuteNonQueryAsync();
-    }
-
-    public IEnumerable<TEntity> GetEntities<TEntity>(string query)
-        where TEntity : IDatabaseReadable<TEntity>, new()
-    {
-        using DbCommand command = Connection.CreateCommand();
-
-        command.CommandText = query;
-
-        DbReader = command.ExecuteReader();
-        
-        while(DbReader.Read())
-        {
-            yield return TEntity.CreateFrom(DbReader);
-        }
-    }
-
-    public async Task<IEnumerable<TEntity>> GetEntitiesAsync<TEntity>(string query)
-        where TEntity : IDatabaseReadable<TEntity>, new() 
-    {
-        using DbCommand command = Connection.CreateCommand();
-
-        command.CommandText = query;
-
-        DbReader = await command.ExecuteReaderAsync();
-
-        List<TEntity> entities = new List<TEntity>();
-
-        while(DbReader.Read())
-        {
-            entities.Add(TEntity.CreateFrom(DbReader));
-        }
-
-        return entities;
-    }
-
-    private bool IsDisposed { get; set; } = false;
-
-    public void Dispose()
-    {
-        if (!IsDisposed || Connection is null)
-        {
-            return;
-        }
-
-        Connection.Dispose();
-        DbReader?.Close();
-        IsDisposed = true;
-    }
-}   
+}
