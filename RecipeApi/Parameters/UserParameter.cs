@@ -6,8 +6,8 @@ namespace RecipeApi.Parameters
     {
         protected override Func<User, bool> ParseToInternal(string key, string value) => key switch
         {
-            "username" => (User user) => user.Username.Contains(value),
-            "email" => (User user) => user.Email.Contains(value),
+            "username" => (User user) => user.Username.Contains(value, StringComparison.OrdinalIgnoreCase),
+            "email" => (User user) => user.Email.Contains(value, StringComparison.OrdinalIgnoreCase),
             "role" => (User user) => user.Role == (Role)int.Parse(value)
         };
     }

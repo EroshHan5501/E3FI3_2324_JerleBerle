@@ -12,7 +12,7 @@ namespace RecipeApi.Endpoints
             : base(dbContext) { }
 
         [HttpGet]
-        public override async Task<IActionResult> Get(UserParameter parameter)
+        public override async Task<IActionResult> Get([FromQuery]UserParameter parameter)
         {
             IEnumerable<Func<User, bool>> filters = parameter.ParseTo();
 
@@ -20,7 +20,7 @@ namespace RecipeApi.Endpoints
 
             foreach (Func<User, bool> filter in filters)
             {
-                query = (IQueryable<User>)query.Where(filter);
+                query = query.Where(filter).AsQueryable();
             }
 
             return Ok(query);

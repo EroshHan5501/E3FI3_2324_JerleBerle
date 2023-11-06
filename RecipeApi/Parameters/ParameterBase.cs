@@ -8,12 +8,18 @@ namespace RecipeApi.Parameters
 
         public int PageSize { get; set; }
 
-        public string Parameters { get; set; }
+        public string? Parameters { get; set; }
 
         protected abstract Func<TEntity, bool> ParseToInternal(string key, string value);
 
         public IEnumerable<Func<TEntity, bool>> ParseTo()
         {
+            if (Parameters is null)
+            {
+                yield return (TEntity entity) => true;
+                yield break;
+            }
+
             string[] parameters = Parameters.Split("&");
             int count = 0;
 
