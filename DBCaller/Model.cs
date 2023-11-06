@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +12,20 @@ namespace DBCaller
     public class RecipeContext : DbContext
     {
 
-        public DbSet<recipe> Recipees { get; set; }
+        public DbSet<recipe> recipe { get; set; }
         public DbSet<ingredient> Ingredients { get; set; }
 
         public string DbPath { get; }
-
-        public RecipeContext()
+        private const string connectionString = "server=localhost;port=3306;database=recipeapp;user=root;password=Gatling762";
+        ServerVersion serverVersion = ServerVersion.AutoDetect(connectionString);
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "recipe.db");
+            optionsBuilder.UseMySql(connectionString, serverVersion)
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
         }
-
-        // The following configures EF to create a Sqlite database file in the
-        // special "local" folder for your platform.
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source={DbPath}");
     }
 
     public class recipe
