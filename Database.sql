@@ -6,7 +6,8 @@ CREATE TABLE User(
     userId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    role INT NOT NULL
 );
 
 CREATE TABLE Recipe(
