@@ -1,4 +1,6 @@
-﻿namespace RecipeApi.Responses
+﻿using System.Text.Json.Serialization;
+
+namespace RecipeApi.Responses
 {
     public class PagedEntityResponse<TEntity>
     {
@@ -8,11 +10,28 @@
 
         public int TotalPages { get; }
 
-        public IEnumerable<TEntity> Entities { get; }
+        [JsonPropertyName("content")]
+        public List<TEntity> Entities { get; }
 
-        public PagedEntityResponse(IEnumerable<TEntity> entities)
+        private PagedEntityResponse(
+            int pageSize, 
+            int currentPage, 
+            int totalPages, 
+            List<TEntity> entities)
         {
+            PageSize = pageSize;
+            CurrentPage = currentPage;
+            TotalPages = totalPages;
             Entities = entities;
+        }
+
+        public static PagedEntityResponse<TEntity> Create(
+            int pageSize, 
+            int currentPage,
+            int totalPages,
+            List<TEntity> entities)
+        {
+            return new(pageSize, currentPage, totalPages, entities);
         }
     }
 }
