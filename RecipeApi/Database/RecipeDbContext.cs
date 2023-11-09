@@ -30,12 +30,10 @@ public class RecipeDbContext : DbContext
             .IsRequired();
 
         modelBuilder.Entity<Recipe>()
-            .ToTable("recipeingredlist")
             .HasMany(x => x.Ingredients)
             .WithMany(x => x.Recipes);
 
         modelBuilder.Entity<Ingredient>()
-            .ToTable("ingredunitmapping")
             .HasMany(x => x.MeasureUnits)
             .WithMany(x => x.Ingredients);
 

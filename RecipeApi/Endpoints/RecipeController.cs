@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
@@ -30,7 +31,7 @@ public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
         }
 
         var includeQuery = query
-            .Include(recipe => recipe.Ingredients);
+            .Include(recipe => recipe.User);
 
         return Ok(includeQuery);
     }
