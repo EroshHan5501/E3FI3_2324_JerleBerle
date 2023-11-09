@@ -1,5 +1,7 @@
 ﻿using RecipeApi.Database.Entities;
 
+using System.Linq.Expressions;
+
 namespace RecipeApi.Parameters;
 
 public class RecipeParameter : ParameterBase<Recipe>
@@ -9,7 +11,7 @@ public class RecipeParameter : ParameterBase<Recipe>
         return value.Split(",");
     }
 
-    protected override Func<Recipe, bool> ParseToInternal(string key, string value) => key switch
+    protected override Expression<Func<Recipe, bool>> ParseToInternal(string key, string value) => key switch
     {
         "title" => (Recipe recipe) => recipe.Title.Contains(value, StringComparison.OrdinalIgnoreCase),
         "startedAt" => (Recipe recipe) => recipe.StartedAt == DateTime.Parse(value),

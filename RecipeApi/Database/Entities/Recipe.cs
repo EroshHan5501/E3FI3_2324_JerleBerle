@@ -19,7 +19,10 @@ public class Recipe : IKeyEntity
 
     public string ImageUrl { get; set; }
 
-    public User User { get; set; }
+    [Column("fuserId")]
+    public int UserId { get; set; }
+
+    public User User { get; set; } = null!;
     
     public List<Ingredient> Ingredients { get; set; }
         = new List<Ingredient>();

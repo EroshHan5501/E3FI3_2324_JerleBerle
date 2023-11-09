@@ -1,5 +1,7 @@
 ﻿using RecipeApi.Exceptions;
 
+using System.Linq.Expressions;
+
 namespace RecipeApi.Parameters
 {
     public abstract class ParameterBase<TEntity>
@@ -10,11 +12,11 @@ namespace RecipeApi.Parameters
 
         public string? Parameters { get; set; }
 
-        protected abstract Func<TEntity, bool> ParseToInternal(string key, string value);
+        protected abstract Expression<Func<TEntity, bool>> ParseToInternal(string key, string value);
 
-        public IEnumerable<Func<TEntity, bool>> ParseTo()
+        public IEnumerable<Expression<Func<TEntity, bool>>> ParseTo()
         {
-            Func<TEntity, bool> defaultFilter = (TEntity entity) => true;
+            Expression<Func<TEntity, bool>> defaultFilter = (TEntity entity) => true;
 
             if (Parameters is null)
             {
@@ -36,7 +38,7 @@ namespace RecipeApi.Parameters
 
                 string[] keyValue = parameter.Split(':');
 
-                Func<TEntity, bool> result; 
+                Expression<Func<TEntity, bool>> result; 
                 try
                 {
                     result = ParseToInternal(keyValue[0], keyValue[1]);

@@ -23,17 +23,19 @@ public class RecipeDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
         modelBuilder.Entity<User>()
             .HasMany(x => x.Recipes)
-            .WithOne(x => x.User);
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
+            .IsRequired();
 
         modelBuilder.Entity<Recipe>()
+            .ToTable("recipeingredlist")
             .HasMany(x => x.Ingredients)
             .WithMany(x => x.Recipes);
 
         modelBuilder.Entity<Ingredient>()
+            .ToTable("ingredunitmapping")
             .HasMany(x => x.MeasureUnits)
             .WithMany(x => x.Ingredients);
 
