@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using RecipeApi.Database.Entities;
+using RecipeCommon.Secrets;
+using System.Reflection;
 
 namespace RecipeApi.Database;
 
@@ -16,8 +18,12 @@ public class RecipeDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        string? basedir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);  
+
+        SecretsFile secrets = SecretsFile.GetFrom("secrets.json", basedir);
+
         optionsBuilder.UseMySql(
-            "server=localhost;port=3306;database=recipeappdb;user=vector;password=K/]zjUT)({?Xbdy?<+YEpsNzB38,*0$rc7DiAqvL",
+            secrets.ConnectionString,
             new MariaDbServerVersion(new Version(11, 1, 0)));
     }
 
