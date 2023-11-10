@@ -15,4 +15,8 @@
     <Folder Include="TransferObjects\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RecipeCommon\RecipeCommon.csproj" />
+  </ItemGroup>
+
 </Project>
