@@ -5,9 +5,8 @@ namespace RecipeCommon.Secrets
 {
     public sealed class SecretsFile
     {
-        public string ConnectionString { get; private set; }
+        public string ConnectionString { get; private set; } = null!;
             
-
         public static SecretsFile GetFrom(string filename, string? basedir=null)
         {
             string bdir = string.IsNullOrWhiteSpace(basedir) ? 
