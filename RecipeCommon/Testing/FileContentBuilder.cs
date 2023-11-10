@@ -14,16 +14,20 @@ public class FileContentBuilder
         Content = new List<string>();
     }
     
-    public void WithText(string text)
+    public FileContentBuilder WithText(string text)
     {
         Content.Add(text);
+
+        return this;
     }
 
-    public void WithJson<TEntity>(TEntity entity) 
+    public FileContentBuilder WithJson<TEntity>(TEntity entity) 
         where TEntity : class
     {
         string json = JsonSerializer.Serialize<TEntity>(entity);
-        Content.Add(json);  
+        Content.Add(json);
+
+        return this;
     }
 
     public void Build()

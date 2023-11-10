@@ -67,27 +67,33 @@ public sealed class DirectoryBuilder
         Filenames = new HashSet<FileContentMapping>();
     }
 
-    public void WithFile(string filename, Action<FileContentBuilder>? builder)
+    public DirectoryBuilder WithFile(string filename, Action<FileContentBuilder>? builder)
     {
         Filenames.Add(new(filename, builder));
+
+        return this;
     }
 
-    public void WithFiles(IEnumerable<(string, Action<FileContentBuilder>?)> filenames)
+    public DirectoryBuilder WithFiles(IEnumerable<(string, Action<FileContentBuilder>?)> filenames)
     {
         foreach ((string filename, Action<FileContentBuilder>? builder) in filenames)
         {
             WithFile(filename, builder);
         }
+
+        return this;
     }
 
     public DirectoryEnvironment Build()
-    {
+    { 
         List<string> filenames = Filenames.Select(x => x.Filename).ToList();
+
+        Directory.CreateDirectory(Basepath);
 
         foreach ((string filename, Action<FileContentBuilder>? initializer) in Filenames)
         {
             string filepath = Path.Combine(Basepath, filename);
-            File.Create(filepath);
+            File.Create(filepath).Dispose();
 
             FileContentBuilder builder = new FileContentBuilder(filepath);
 
