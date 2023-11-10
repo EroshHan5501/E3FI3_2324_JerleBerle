@@ -42,7 +42,5 @@ public class RecipeDbContext : DbContext
         modelBuilder.Entity<Ingredient>()
             .HasMany(x => x.MeasureUnits)
             .WithMany(x => x.Ingredients);
-
     }
-
 }

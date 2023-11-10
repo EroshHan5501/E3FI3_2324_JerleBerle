@@ -1,11 +1,13 @@
 ﻿using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace RecipeCommon.Secrets
 {
     public sealed class SecretsFile
     {
-        public string ConnectionString { get; private set; } = null!;
+        [JsonPropertyName("connectionString")]
+        public string ConnectionString { get; set; } = null!;
             
         public static SecretsFile GetFrom(string filename, string? basedir=null)
         {

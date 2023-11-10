@@ -1,12 +1,9 @@
 ﻿using RecipeCommon.Secrets;
 using RecipeCommon.Testing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using System.Text.Json;
+
 using Xunit;
-using Xunit.Sdk;
 
 namespace RecipeCommon.Tests;
 
@@ -36,7 +33,7 @@ public class SecretsFileShould
 
         yield return new object[]
         {
-            "{\"nice\":200}"
+            "{\"nice\":200"
         };
 
         yield return new object[]
@@ -49,6 +46,33 @@ public class SecretsFileShould
     [MemberData(nameof(GetInvalidJsonTestingData))]
     public void ThrowsExceptionForInvalid(string json)
     {
+        DirectoryBuilder builder = new DirectoryBuilder();
 
+        DirectoryEnvironment env = builder
+            .WithFile("secrets.json", builder =>
+            {
+                builder.WithText(json);
+            })
+            .Build();
+
+        Assert.Throws<JsonException>(() => 
+            SecretsFile.GetFrom("secrets.json", env.BasePath));
+    }
+
+    [Fact]
+    public void ReturnsCorrectConnectionString()
+    {
+        DirectoryBuilder builder = new DirectoryBuilder();
+
+        DirectoryEnvironment env = builder
+            .WithFile("secrets.json", builder =>
+            {
+                builder.WithText("{\"connectionString\":\"Hello world\"}");
+            })
+            .Build();
+
+        SecretsFile file = SecretsFile.GetFrom("secrets.json", env.BasePath);
+
+        Assert.Equal("Hello world", file.ConnectionString);
     }
 }
