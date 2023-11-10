@@ -4,3 +4,8 @@ INSERT INTO User(username, email, password, role) VALUES('admin', 'admin.test@gm
 INSERT INTO User(username, email, password, role) VALUES('test1', 'test1.test@gmail.com', '+5l9XAHrz5Ytggs7Dn+L/ut/S9M3zINoLyr5DSUsIMXYV0S3xruU9IE59pCmHkrTF9YQfkMQ78AW2ShyZrUXKw==', 0);
 INSERT INTO User(username, email, password, role) VALUES('test2', 'test2.test@gmail.com', '+5l9XAHrz5Ytggs7Dn+L/ut/S9M3zINoLyr5DSUsIMXYV0S3xruU9IE59pCmHkrTF9YQfkMQ78AW2ShyZrUXKw==', 0);
 INSERT INTO User(username, email, password, role) VALUES('test3', 'test3.test@gmail.com', '+5l9XAHrz5Ytggs7Dn+L/ut/S9M3zINoLyr5DSUsIMXYV0S3xruU9IE59pCmHkrTF9YQfkMQ78AW2ShyZrUXKw==', 0);
+
+INSERT INTO Recipe(title, createdAt, description, imageUrl, fuserId) VALUES('Pasta', '2023-11-02T02:00:00', 'Nice try', '', 1);
+INSERT INTO Recipe(title, createdAt, description, imageUrl, fuserId) VALUES('Pizza', '2023-11-02T02:00:00', 'Nice try', '', 2);
+INSERT INTO Recipe(title, createdAt, description, imageUrl, fuserId) VALUES('Schnitzel', '2023-11-02T02:00:00', 'Nice try', '', 3);
+INSERT INTO Recipe(title, createdAt, description, imageUrl, fuserId) VALUES('Burger', '2023-11-02T02:00:00', 'Nice try', '', 4);

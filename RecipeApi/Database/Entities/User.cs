@@ -24,5 +24,5 @@ public class User : IKeyEntity
 
     public Role Role { get; set; }
 
-    public List<Recipe> Recipes { get; set; }
+    public List<Recipe> Recipes { get; set; } =  new List<Recipe>();
 }

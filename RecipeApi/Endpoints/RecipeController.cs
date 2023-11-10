@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Parameters;
+
+using System.Linq.Expressions;
 
 namespace RecipeApi.Endpoints;
 
@@ -17,16 +21,19 @@ public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
     [HttpGet]
     public override async Task<IActionResult> Get([FromQuery]RecipeParameter parameter)
     {
-        IEnumerable<Func<Recipe, bool>> filters = parameter.ParseTo();
+        IEnumerable<Expression<Func<Recipe, bool>>> filters = parameter.ParseTo();
 
-        IQueryable<Recipe> query = DbContext.Recipes.AsQueryable();
+        IQueryable<Recipe> query = DbContext.Recipes;
 
-        foreach (Func<Recipe, bool> filter in filters)
+        foreach (Expression<Func<Recipe, bool>> filter in filters)
         {
-            query = query.Where(filter).AsQueryable();
+            query = query.Where(filter);
         }
 
-        return Ok(query);
+        var includeQuery = query
+            .Include(recipe => recipe.User);
+
+        return Ok(includeQuery);
     }
 
     [HttpPost("create")]
