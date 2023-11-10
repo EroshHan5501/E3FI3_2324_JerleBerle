@@ -11,8 +11,14 @@ public class Ingredient : IKeyEntity
     public int Id { get; set; }
 
     public string Name { get; set; }
+    
+    public int UnitId { get; set; }
 
-    public List<MeasureUnit> MeasureUnits { get; set; } = new List<MeasureUnit>();
+    public Unit Unit { get; set; }
 
-    public List<Recipe> Recipes { get; set; } = new List<Recipe>();
+    public int AmountId { get; set; }
+
+    public Amount Amount { get; set; }
+
+    public List<IngredientRecipe> Recipes { get; set; } = new List<IngredientRecipe>(); 
 }

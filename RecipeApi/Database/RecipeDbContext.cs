@@ -2,9 +2,26 @@
 
 using RecipeApi.Database.Entities;
 using RecipeCommon.Secrets;
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
 namespace RecipeApi.Database;
+
+// TODO: Implement resolve 
+
+[Table("ingredientrecipe")]
+public class IngredientRecipe
+{
+    public int IngredientId { get; set; }
+
+    public Ingredient Ingredient { get; set; }
+
+    public int RecipeId { get; set; }   
+
+    public Recipe Recipe { get; set; }
+}
 
 public class RecipeDbContext : DbContext
 {
@@ -14,7 +31,9 @@ public class RecipeDbContext : DbContext
 
     public DbSet<Ingredient> Ingredients { get; set; }  
 
-    public DbSet<MeasureUnit> MeasureUnits { get; set; }
+    public DbSet<Unit> Units { get; set; }
+
+    public DbSet<Amount> Amounts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -35,12 +54,34 @@ public class RecipeDbContext : DbContext
             .HasForeignKey(x => x.UserId)
             .IsRequired();
 
-        modelBuilder.Entity<Recipe>()
+        modelBuilder.Entity<Unit>()
             .HasMany(x => x.Ingredients)
-            .WithMany(x => x.Recipes);
+            .WithOne(x => x.Unit)
+            .HasForeignKey(x => x.UnitId)
+            .IsRequired();
 
-        modelBuilder.Entity<Ingredient>()
-            .HasMany(x => x.MeasureUnits)
-            .WithMany(x => x.Ingredients);
+        modelBuilder.Entity<Amount>() 
+            .HasMany(x => x.Ingredients)
+            .WithOne(x => x.Amount)
+            .HasForeignKey(x => x.AmountId)
+            .IsRequired();
+
+        modelBuilder.Entity<IngredientRecipe>().HasKey(x => new { x.IngredientId, x.RecipeId });
+
+        modelBuilder.Entity<IngredientRecipe>()
+            .HasOne(x => x.Ingredient)
+            .WithMany(x => x.Recipes)
+            .HasForeignKey(x => x.IngredientId);
+
+        modelBuilder.Entity<IngredientRecipe>()
+            .HasOne(x => x.Recipe)
+            .WithMany(x => x.Ingredients)
+            .HasForeignKey(x => x.RecipeId);
+
+        modelBuilder.Entity<User>().Navigation(x => x.Recipes).AutoInclude();
+        modelBuilder.Entity<Recipe>().Navigation(x => x.Ingredients).AutoInclude();
+        modelBuilder.Entity<Recipe>().Navigation(x => x.User).AutoInclude();
+        modelBuilder.Entity<Ingredient>().Navigation(x => x.Unit).AutoInclude();
+        modelBuilder.Entity<Ingredient>().Navigation(x => x.Amount).AutoInclude();
     }
 }

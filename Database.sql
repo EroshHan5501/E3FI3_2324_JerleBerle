@@ -16,27 +16,28 @@ CREATE TABLE Recipe(
     createdAt DATETIME NOT NULL,
     description TEXT NOT NULL,
     imageUrl TEXT NOT NULL,
-    fuserId INTEGER REFERENCES User(userId)
+    userId INTEGER REFERENCES User(userId)
 );
 
-CREATE TABLE Ingredient(
+CREATE TABLE Amount(
+    amountId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    amountValue INTEGER NOT NULL
+);
+
+CREATE TABLE Unit(
+    unitId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100)
+);
+
+CREATE TABLE Ingredient (
     ingredientId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100)
+    name VARCHAR(100) NOT NULL,
+    amountId INTEGER REFERENCES Amount(amountId),
+    unitId INTEGER REFERENCES Unit(unitId)
 );
 
-CREATE TABLE UnitOfMeasurement(
-    measureId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100)
-);
-
-CREATE TABLE IngredUnitMapping(
-    ingredUnitMappingId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    fIngredientId INTEGER REFERENCES Ingredient(ingredientId),
-    fUnitId INTEGER REFERENCES UnitOfMeasurement(measureId)
-);
-
-CREATE TABLE RecipeIngredList(
-    recipIngredId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    frecipeId INTEGER REFERENCES Recipe(recipeId),
-    fIngredUnitMap INTEGER REFERENCES IngredUnitMapping(ingredUnitMappingId)
+CREATE TABLE ingredientrecipe(
+    recipeIngredientId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    recipeId INTEGER REFERENCES Recipe(recipeId),
+    ingredientId INTEGER REFERENCES Ingredient(ingredientId)
 );
