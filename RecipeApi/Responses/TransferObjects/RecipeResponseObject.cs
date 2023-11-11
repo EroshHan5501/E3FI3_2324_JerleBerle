@@ -1,7 +1,5 @@
 ﻿using RecipeApi.Database.Entities;
 
-using System.Text.Json.Serialization;
-
 namespace RecipeApi.Responses.TransferObjects;
 
 public class RecipeResponseObject

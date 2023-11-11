@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
+using RecipeApi.Database.Extensions;
 using RecipeApi.Parameters;
+using RecipeApi.Responses;
 using RecipeApi.Responses.TransferObjects;
 
 using System.Linq.Expressions;
@@ -31,8 +31,9 @@ public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
             query = query.Where(filter);
         }
 
-        IQueryable<RecipeResponseObject> results = query
-            .Select(recipe => new RecipeResponseObject(recipe, false));
+        PagedEntityResponse<RecipeResponseObject> results = await query
+            .Select(recipe => new RecipeResponseObject(recipe, false))
+            .ToPageAsync(parameter.PageIndex, parameter.PageSize);
 
         return Ok(results);
     }

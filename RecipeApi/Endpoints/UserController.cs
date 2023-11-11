@@ -2,53 +2,55 @@
 
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
+using RecipeApi.Database.Extensions;
 using RecipeApi.Parameters;
+using RecipeApi.Responses;
 using RecipeApi.Responses.TransferObjects;
 
 using System.Linq.Expressions;
 
-namespace RecipeApi.Endpoints
+namespace RecipeApi.Endpoints;
+
+public class UserController : RecipeBaseController<User, UserParameter>
 {
-    public class UserController : RecipeBaseController<User, UserParameter>
+    public UserController(RecipeDbContext dbContext) 
+        : base(dbContext) { }
+
+    [HttpGet]
+    public override async Task<IActionResult> Get([FromQuery]UserParameter parameter)
     {
-        public UserController(RecipeDbContext dbContext) 
-            : base(dbContext) { }
+        IEnumerable<Expression<Func<User, bool>>> filters = parameter.ParseTo();
 
-        [HttpGet]
-        public override async Task<IActionResult> Get([FromQuery]UserParameter parameter)
+        IQueryable<User> query = DbContext.Users;
+
+        foreach (Expression<Func<User, bool>> filter in filters)
         {
-            IEnumerable<Expression<Func<User, bool>>> filters = parameter.ParseTo();
-
-            IQueryable<User> query = DbContext.Users;
-
-            foreach (Expression<Func<User, bool>> filter in filters)
-            {
-                query = query.Where(filter);
-            }
-
-            IQueryable<UserResponseObject> results = query
-                .Select(user => new UserResponseObject(user, true));
-
-            return Ok(results);
+            query = query.Where(filter);
         }
 
-        [HttpPost("create")]
-        public override async Task<IActionResult> Create()
-        {
-            return Ok();
-        }
+        PagedEntityResponse<UserResponseObject> results = await query
+            .Select(user => new UserResponseObject(user, true))
+            .ToPageAsync(parameter.PageIndex, parameter.PageSize);
 
-        [HttpPost("update")]
-        public override async Task<IActionResult> Update()
-        {
-            return Ok();
-        }
+        return Ok(results);
+    }
 
-        [HttpDelete("delete")]
-        public override async Task<IActionResult> Delete()
-        {
+    [HttpPost("create")]
+    public override async Task<IActionResult> Create()
+    {
+        return Ok();
+    }
 
-            return Ok();
-        }
+    [HttpPost("update")]
+    public override async Task<IActionResult> Update()
+    {
+        return Ok();
+    }
+
+    [HttpDelete("delete")]
+    public override async Task<IActionResult> Delete()
+    {
+
+        return Ok();
     }
 }
