@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace RecipeApi.Database.Entities;
 
@@ -20,5 +21,10 @@ public class Ingredient : IKeyEntity
 
     public Amount Amount { get; set; }
 
-    public List<IngredientRecipe> Recipes { get; set; } = new List<IngredientRecipe>(); 
+    [JsonIgnore]
+    public List<IngredientRecipe> Recipes { get; set; } = new List<IngredientRecipe>();
+
+    [NotMapped]
+    [JsonPropertyName("recipes")]
+    public List<Recipe> RecipeMapping => Recipes.Select(x => x.Recipe).ToList();
 }

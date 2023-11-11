@@ -83,5 +83,6 @@ public class RecipeDbContext : DbContext
         modelBuilder.Entity<Recipe>().Navigation(x => x.User).AutoInclude();
         modelBuilder.Entity<Ingredient>().Navigation(x => x.Unit).AutoInclude();
         modelBuilder.Entity<Ingredient>().Navigation(x => x.Amount).AutoInclude();
+        modelBuilder.Entity<IngredientRecipe>().Navigation(x => x.Ingredient).AutoInclude();
     }
 }

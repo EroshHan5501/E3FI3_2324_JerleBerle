@@ -7,7 +7,7 @@ namespace RecipeApi.Database.Entities;
 public class Unit : IKeyEntity
 {
     [Key]
-    [Column("measureId")]
+    [Column("unitId")]
     public int Id { get; set; }
 
     public string Name { get; set; }
