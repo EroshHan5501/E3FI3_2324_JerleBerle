@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RecipeClient.Model
-{
-    public abstract class ModelBase
-    {
-        public int Id { get; }
+namespace RecipeClient.Model;
 
-        public ModelBase(int id)
-        {
-            Id = id;
-        }
+public abstract class ModelBase
+{
+    public int Id { get; }
+
+    public ModelBase(int id)
+    {
+        Id = id;
     }
 }

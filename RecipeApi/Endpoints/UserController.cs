@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Parameters;
+using RecipeApi.Responses.TransferObjects;
 
 using System.Linq.Expressions;
 
@@ -26,7 +27,7 @@ namespace RecipeApi.Endpoints
                 query = query.Where(filter);
             }
 
-            return Ok(query.Include(x => x.Recipes));
+            return Ok(query.Select(user => new UserResponseObject(user)));
         }
 
         [HttpPost("create")]
