@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 
 namespace RecipeApi.Database.Entities;
 
@@ -16,13 +17,31 @@ public class User : IKeyEntity
     [Column("userId")]
     public int Id { get; set; }
 
-    public string Username { get; set; }
+    public string Username { get; set; } = null!;
 
-    public string Email { get; set; }
+    public string Email { get; set; } = null!;
 
-    public string Password { get; set; }
+    public string Password { get; set; } = null!;
 
     public Role Role { get; set; }
 
     public List<Recipe> Recipes { get; set; } =  new List<Recipe>();
+
+    public static Dictionary<Role, string> RoleNameMapping = new Dictionary<Role, string>()
+    {
+        { Role.Admin, "Admin" },
+        { Role.User, "User" }
+    };
+
+    public ClaimsPrincipal GeneratePrincipal()
+    {
+        return new ClaimsPrincipal(new ClaimsIdentity(
+            new List<Claim>()
+            {
+                new Claim(ClaimTypes.Sid, Id.ToString()),
+                new Claim(ClaimTypes.Name, Username),
+                new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Role, RoleNameMapping[Role])
+            }));
+    }
 }

@@ -5,8 +5,7 @@ namespace RecipeApi.Extensions;
 
 internal static class HttpRequestExtensions 
 {
-
-    public static async Task<TEntity?> BodyAsJsonAsync<TEntity>(this HttpRequest request) 
+    public static async Task<TEntity> BodyAsJsonAsync<TEntity>(this HttpRequest request) 
     {
         Stream body = request.Body;
         JsonSerializerOptions options = new()
@@ -18,6 +17,12 @@ internal static class HttpRequestExtensions
         {
             TEntity? entity = await JsonSerializer
                 .DeserializeAsync<TEntity>(body, options);
+
+            if (entity == null)
+            {
+                throw HttpException.BadRequest("Could not deserialize json");
+            }
+
             return entity;
         }
         catch (JsonException) 

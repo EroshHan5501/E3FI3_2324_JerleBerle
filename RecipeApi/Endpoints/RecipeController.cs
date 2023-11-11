@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
@@ -11,6 +12,7 @@ using System.Linq.Expressions;
 
 namespace RecipeApi.Endpoints;
 
+[Authorize(Roles = "User, Admin")]
 public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
 {
     public RecipeController(RecipeDbContext dbContext)

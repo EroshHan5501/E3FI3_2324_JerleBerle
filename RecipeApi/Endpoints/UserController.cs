@@ -1,16 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Database.Extensions;
+using RecipeApi.Exceptions;
 using RecipeApi.Parameters;
 using RecipeApi.Responses;
 using RecipeApi.Responses.TransferObjects;
 
 using System.Linq.Expressions;
+using System.Security.Claims;
 
 namespace RecipeApi.Endpoints;
 
+[Authorize(Roles = "User, Admin")]
 public class UserController : RecipeBaseController<User, UserParameter>
 {
     public UserController(RecipeDbContext dbContext) 
@@ -33,6 +37,29 @@ public class UserController : RecipeBaseController<User, UserParameter>
             .ToPageAsync(parameter.PageIndex, parameter.PageSize);
 
         return Ok(results);
+    }
+
+    [HttpGet("current")]
+    public async Task<IActionResult> GetSingle()
+    {
+        Claim? idClaim = this.HttpContext.User.FindFirst(ClaimTypes.Sid);
+
+        if (idClaim is null)
+        {
+            throw HttpException.NotFound("Can't identify current user!");
+        }
+
+        int id = int.Parse(idClaim?.Value!);
+
+        User? currentUser = DbContext.Users
+            .FirstOrDefault(u => u.Id == id);
+
+        if (currentUser is null)
+        {
+            throw HttpException.NotFound("User does not exists!");
+        }
+
+        return Ok(currentUser); 
     }
 
     [HttpPost("create")]
