@@ -16,19 +16,21 @@ public class RecipeResponseObject
 
     public string ImageUrl { get; set; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public UserResponseObject? User { get; set; }
+    public UserResponseObject User { get; set; }
 
     public List<IngredientResponseObject> Ingredients { get; set; }
 
-    public RecipeResponseObject(Recipe recipe)
+    public RecipeResponseObject(Recipe recipe, bool includeUser)
     {
         Id = recipe.Id;
         Title = recipe.Title;
         CreatedAt = recipe.StartedAt;
         Description = recipe.Description;
         ImageUrl = recipe.ImageUrl;
-        //User = recipe.User is not null ?  new UserResponseObject(recipe.User) : null;
+        User = includeUser ? 
+            new UserResponseObject(recipe.User) : 
+            new UserResponseObject(recipe.User, false) ;
         Ingredients = recipe.JsonIngredients.Select(x => new IngredientResponseObject(x)).ToList();
     }
+
 }

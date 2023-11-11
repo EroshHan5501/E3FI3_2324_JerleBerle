@@ -1,4 +1,8 @@
-﻿using RecipeApi.Database.Entities;
+﻿using Microsoft.Extensions.Configuration.UserSecrets;
+
+using RecipeApi.Database.Entities;
+
+using System.Text.Json.Serialization;
 
 namespace RecipeApi.Responses.TransferObjects;
 
@@ -10,13 +14,14 @@ public class UserResponseObject
 
     public Role Role { get; set; }
 
-    public List<RecipeResponseObject> Recipes { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public List<RecipeResponseObject>? Recipes { get; set; }
 
-    public UserResponseObject(User user)
+    public UserResponseObject(User user, bool includeRecipes=false)
     {
         Id = user.Id;
         Username = user.Username;
         Role = user.Role;
-        Recipes = user.Recipes.Select(x => new RecipeResponseObject(x)).ToList();
+        Recipes = includeRecipes ? user.Recipes.Select(x => new RecipeResponseObject(x, false)).ToList() : default;
     }
 }

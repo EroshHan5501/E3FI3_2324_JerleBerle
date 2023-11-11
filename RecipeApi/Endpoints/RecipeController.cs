@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Parameters;
+using RecipeApi.Responses.TransferObjects;
 
 using System.Linq.Expressions;
 
@@ -30,10 +31,10 @@ public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
             query = query.Where(filter);
         }
 
-        var includeQuery = query
-            .Include(recipe => recipe.User);
+        IQueryable<RecipeResponseObject> results = query
+            .Select(recipe => new RecipeResponseObject(recipe, false));
 
-        return Ok(includeQuery);
+        return Ok(results);
     }
 
     [HttpPost("create")]

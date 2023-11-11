@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
@@ -27,7 +26,10 @@ namespace RecipeApi.Endpoints
                 query = query.Where(filter);
             }
 
-            return Ok(query.Select(user => new UserResponseObject(user)));
+            IQueryable<UserResponseObject> results = query
+                .Select(user => new UserResponseObject(user, true));
+
+            return Ok(results);
         }
 
         [HttpPost("create")]
