@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MariaDBApi.Models
 {
@@ -13,12 +14,15 @@ namespace MariaDBApi.Models
         public DbSet<Recipe> RecipeItems { get; set; } = null!;
         public DbSet<Ingredient> IngredientItems { get; set; } = null!;
     }
+
+    [Table("Recipe")]
     public class Recipe
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
+    [Table("Ingredient")]
     public class Ingredient
     {
         public int Id { get; set; }
