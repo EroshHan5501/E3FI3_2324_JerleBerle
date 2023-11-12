@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
+using RecipeApi.Authentication;
 using RecipeApi.Database;
 using RecipeApi.Middlewares;
 using RecipeApi.Middlewares.Authentication;
@@ -17,10 +18,28 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddCookie(options =>
 {
+    string domain = "localhost";
+
+    if (builder.Environment.IsProduction())
+    {
+        domain = "recipe-app.com";
+    }
+
     options.ClaimsIssuer = "RecipeApp";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.Cookie = new CookieBuilder()
+    {
+        Name = "sid",
+        HttpOnly = true,
+        IsEssential = true,
+        SameSite = SameSiteMode.Strict,
+        Domain = domain
+    };
+
+    options.EventsType = typeof(RecipeAuthenticationEvents);
 });
 
 builder.Services.AddCors(corsOptions =>
@@ -31,6 +50,7 @@ builder.Services.AddCors(corsOptions =>
     });
 });
 
+builder.Services.AddScoped<RecipeAuthenticationEvents>();
 builder.Services.AddLogging();
 
 WebApplication app = builder.Build();
@@ -49,7 +69,7 @@ app.UseCookiePolicy(new CookiePolicyOptions()
     MinimumSameSitePolicy = SameSiteMode.Strict
 });
 
-app.UseCors();
+app.UseCors("recipePolicy");
 
 app.UseMiddleware<LoginMiddleware>();
 app.UseMiddleware<LogoutMiddleware>();

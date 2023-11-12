@@ -24,7 +24,7 @@ public class LoginMiddleware
 
     public async Task InvokeAsync(HttpContext context, RecipeDbContext dbContext)
     {
-        if (context.Request.Path != "/api/login")
+        if (context.Request.Path != "/api/login/")
         {
             await Next.Invoke(context);
             return;
@@ -52,6 +52,7 @@ public class LoginMiddleware
             throw HttpException.BadRequest("Email or password are incorrect!");
         }
 
+        // TODO: Rework the hashing
         string hashedPassword = HashHelper.GenerateSHA512Hash(creds.Password);
 
         if (user.Password != hashedPassword)

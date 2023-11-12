@@ -37,7 +37,7 @@ CREATE TABLE Ingredient (
 );
 
 CREATE TABLE ingredientrecipe(
-    recipeIngredientId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    IngredientRecipeId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     recipeId INTEGER REFERENCES Recipe(recipeId),
     ingredientId INTEGER REFERENCES Ingredient(ingredientId)
 );

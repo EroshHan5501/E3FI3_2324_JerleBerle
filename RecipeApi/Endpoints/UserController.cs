@@ -14,7 +14,7 @@ using System.Security.Claims;
 
 namespace RecipeApi.Endpoints;
 
-[Authorize(Roles = "User, Admin")]
+[Authorize(Roles = "Admin, User")]
 public class UserController : RecipeBaseController<User, UserParameter>
 {
     public UserController(RecipeDbContext dbContext) 
