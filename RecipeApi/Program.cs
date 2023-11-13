@@ -77,6 +77,7 @@ app.UseCors("recipePolicy");
 
 app.UseMiddleware<LoginMiddleware>();
 app.UseMiddleware<LogoutMiddleware>();
+app.UseMiddleware<RegisterMiddleware>();
 
 app.UseAuthentication();
 

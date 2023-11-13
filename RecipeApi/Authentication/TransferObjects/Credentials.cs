@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RecipeApi.Authentication;
+namespace RecipeApi.Authentication.TransferObjects;
 
 public class Credentials
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using RecipeApi.Authentication;
+using RecipeApi.Authentication.TransferObjects;
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Exceptions;
@@ -55,6 +55,7 @@ public class LoginMiddleware
         // TODO: Rework the hashing
         string hashedPassword = HashHelper.GenerateSHA512Hash(creds.Password);
 
+        // TODO: Fix hasing 
         Console.WriteLine(hashedPassword);
         Console.WriteLine(user.Password);
          

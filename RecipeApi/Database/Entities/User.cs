@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RecipeApi.Helper;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 
@@ -26,6 +27,14 @@ public class User : IKeyEntity
     public Role Role { get; set; }
 
     public List<Recipe> Recipes { get; set; } =  new List<Recipe>();
+
+    public User(string username, string email, string password)
+    {
+        Username = username;
+        Email = email;
+        Password = HashHelper.GenerateSHA512Hash(password);
+        Role = Role.User;
+    }
 
     public static Dictionary<Role, string> RoleNameMapping = new Dictionary<Role, string>()
     {
