@@ -6,6 +6,7 @@ using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Exceptions;
 using RecipeApi.Extensions;
+using RecipeApi.Helper;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Security.Claims;
@@ -51,7 +52,9 @@ public class RegisterMiddleware
             throw HttpException.BadRequest("Email or username already exist!");
         }
 
-        User user = new User(register.Username, register.Email, register.Password);
+        string hashedPassword = HashHelper.GenerateSHA512Hash(register.Password);
+
+        User user = new User(register.Username, register.Email, hashedPassword);
 
         EntityEntry<User> createdUser = dbContext.Users.Add(user);
 

@@ -26,13 +26,13 @@ public class User : IKeyEntity
 
     public Role Role { get; set; }
 
-    public List<Recipe> Recipes { get; set; } =  new List<Recipe>();
+    public List<Recipe> Recipes { get; set; } = new List<Recipe>();
 
     public User(string username, string email, string password)
     {
         Username = username;
         Email = email;
-        Password = HashHelper.GenerateSHA512Hash(password);
+        Password = password;
         Role = Role.User;
     }
 
