@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-using RecipeApi.Authentication.TransferObjects;
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Database.Extensions;
+using RecipeApi.DataObjects.Users;
 using RecipeApi.Exceptions;
 using RecipeApi.Helper;
 using RecipeApi.Parameters;

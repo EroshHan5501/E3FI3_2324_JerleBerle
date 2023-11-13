@@ -1,4 +1,4 @@
-﻿using RecipeApi.Authentication.TransferObjects;
+﻿using RecipeApi.DataObjects.Users;
 using RecipeApi.Helper;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,11 +30,17 @@ public class User : IKeyEntity
     public List<Recipe> Recipes { get; set; } = new List<Recipe>();
 
     public User(string username, string email, string password)
+        : this(username, email, password, Role.User)
+    {
+        
+    }
+
+    public User(string username, string email, string password, Role role)
     {
         Username = username;
         Email = email;
         Password = password;
-        Role = Role.User;
+        Role = role;
     }
 
     public static Dictionary<Role, string> RoleNameMapping = new Dictionary<Role, string>()

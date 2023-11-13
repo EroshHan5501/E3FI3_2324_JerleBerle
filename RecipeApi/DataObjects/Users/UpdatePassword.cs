@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace RecipeApi.Authentication.TransferObjects;
+namespace RecipeApi.DataObjects.Users;
 
 public class UpdatePassword
 {

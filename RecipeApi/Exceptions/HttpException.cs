@@ -29,6 +29,13 @@ public class HttpException : Exception
             message);
     }
 
+    public static HttpException Forbidden(string message)
+    {
+        return new HttpException(
+            HttpStatusCode.Forbidden,
+            message);
+    }
+
     public static HttpException Custom(
         HttpStatusCode statusCode, 
         string message) {

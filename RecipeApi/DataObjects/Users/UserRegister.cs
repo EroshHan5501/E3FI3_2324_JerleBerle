@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RecipeApi.Authentication.TransferObjects;
+namespace RecipeApi.DataObjects.Users;
 
 public class UserRegister
 {
@@ -14,5 +14,5 @@ public class UserRegister
 
     [Required]
     [MinLength(12)]
-    public string Password { get; set; }    
+    public string Password { get; set; }
 }
