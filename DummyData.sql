@@ -1,9 +1,9 @@
 USE recipeAppDb;
 
-INSERT INTO User(username, email, password, role) VALUES('admin', 'admin.test@gmail.com', 'YmVkNGVmYTFkNGZkYmQ5NTRiZDM3MDVkNmEyYTc4MjcwZWM5YTUyZWNmYmZiMDEwYzYxODYyYWY1Yzc2YWYxNzYxZmZlYjFhZWY2YWNhMWJmNWQwMmIzNzgxYWE4NTRmYWJkMmI2OWM3OTBkZTc0ZTE3ZWNmZWMzY2I2YWM0YmY=', 1);
-INSERT INTO User(username, email, password, role) VALUES('test1', 'test1.test@gmail.com', 'YmVkNGVmYTFkNGZkYmQ5NTRiZDM3MDVkNmEyYTc4MjcwZWM5YTUyZWNmYmZiMDEwYzYxODYyYWY1Yzc2YWYxNzYxZmZlYjFhZWY2YWNhMWJmNWQwMmIzNzgxYWE4NTRmYWJkMmI2OWM3OTBkZTc0ZTE3ZWNmZWMzY2I2YWM0YmY=', 0);
-INSERT INTO User(username, email, password, role) VALUES('test2', 'test2.test@gmail.com', 'YmVkNGVmYTFkNGZkYmQ5NTRiZDM3MDVkNmEyYTc4MjcwZWM5YTUyZWNmYmZiMDEwYzYxODYyYWY1Yzc2YWYxNzYxZmZlYjFhZWY2YWNhMWJmNWQwMmIzNzgxYWE4NTRmYWJkMmI2OWM3OTBkZTc0ZTE3ZWNmZWMzY2I2YWM0YmY=', 0);
-INSERT INTO User(username, email, password, role) VALUES('test3', 'test3.test@gmail.com', 'YmVkNGVmYTFkNGZkYmQ5NTRiZDM3MDVkNmEyYTc4MjcwZWM5YTUyZWNmYmZiMDEwYzYxODYyYWY1Yzc2YWYxNzYxZmZlYjFhZWY2YWNhMWJmNWQwMmIzNzgxYWE4NTRmYWJkMmI2OWM3OTBkZTc0ZTE3ZWNmZWMzY2I2YWM0YmY=', 0);
+INSERT INTO User(username, email, password, role) VALUES('admin', 'admin.test@gmail.com', 'vtTvodT9vZVL03Bdaip4Jw7JpS7Pv7AQxhhir1x2rxdh/+sa72rKG/XQKzeBqoVPq9K2nHkN504X7P7Dy2rEvw==', 1);
+INSERT INTO User(username, email, password, role) VALUES('test1', 'test1.test@gmail.com', 'vtTvodT9vZVL03Bdaip4Jw7JpS7Pv7AQxhhir1x2rxdh/+sa72rKG/XQKzeBqoVPq9K2nHkN504X7P7Dy2rEvw==', 0);
+INSERT INTO User(username, email, password, role) VALUES('test2', 'test2.test@gmail.com', 'vtTvodT9vZVL03Bdaip4Jw7JpS7Pv7AQxhhir1x2rxdh/+sa72rKG/XQKzeBqoVPq9K2nHkN504X7P7Dy2rEvw==', 0);
+INSERT INTO User(username, email, password, role) VALUES('test3', 'test3.test@gmail.com', 'vtTvodT9vZVL03Bdaip4Jw7JpS7Pv7AQxhhir1x2rxdh/+sa72rKG/XQKzeBqoVPq9K2nHkN504X7P7Dy2rEvw==', 0);
 
 INSERT INTO Recipe(title, createdAt, description, imageUrl, userId) VALUES('Pasta', '2023-11-02T02:00:00', 'Nice try', '', 1);
 INSERT INTO Recipe(title, createdAt, description, imageUrl, userId) VALUES('Pizza', '2023-11-02T02:00:00', 'Nice try', '', 2);

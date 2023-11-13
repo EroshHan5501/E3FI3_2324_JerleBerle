@@ -18,7 +18,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(options =>
+{
+    options.RequireAuthenticatedSignIn = false;
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
 .AddCookie(options =>
 {
     string domain = "localhost";

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 using RecipeApi.Authentication;
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
@@ -55,6 +55,9 @@ public class LoginMiddleware
         // TODO: Rework the hashing
         string hashedPassword = HashHelper.GenerateSHA512Hash(creds.Password);
 
+        Console.WriteLine(hashedPassword);
+        Console.WriteLine(user.Password);
+         
         if (user.Password != hashedPassword)
         {
             throw HttpException.BadRequest("Email or password are incorrect!");
@@ -62,7 +65,7 @@ public class LoginMiddleware
 
         ClaimsPrincipal principal = user.GeneratePrincipal();
 
-        await context.SignInAsync(principal);
+        await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
         context.Response.StatusCode = (int)HttpStatusCode.OK;
 

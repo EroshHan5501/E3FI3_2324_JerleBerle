@@ -9,6 +9,6 @@ public static class HashHelper
     {
         byte[] bInput = Encoding.UTF8.GetBytes(input);
         byte[] hashBytes = SHA512.HashData(bInput);
-        return Convert.ToBase64String(hashBytes);
+        return Convert.ToBase64String(hashBytes);   
     }
 }
