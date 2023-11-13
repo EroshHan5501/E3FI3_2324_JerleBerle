@@ -1,4 +1,5 @@
-﻿using RecipeApi.Helper;
+﻿using RecipeApi.Authentication.TransferObjects;
+using RecipeApi.Helper;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
@@ -41,6 +42,17 @@ public class User : IKeyEntity
         { Role.Admin, "Admin" },
         { Role.User, "User" }
     };
+
+    public void Update(UserUpdate data)
+    {
+        data.Email = Email;
+        data.Username = Username;
+    }
+
+    public void UpdatePassword(string newPassword)
+    {
+        Password = HashHelper.GenerateSHA512Hash(newPassword); ;
+    }
 
     public ClaimsPrincipal GeneratePrincipal()
     {

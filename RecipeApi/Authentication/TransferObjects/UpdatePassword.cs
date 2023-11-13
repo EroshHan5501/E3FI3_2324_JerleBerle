@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace RecipeApi.Authentication.TransferObjects;
 
@@ -14,5 +15,8 @@ public class UpdatePassword
 
     [Required]
     [MinLength(12, ErrorMessage = "Password must be min. 12 characters long")]
+    [JsonPropertyName("confirm")]
     public string ConfirmNew { get; set; } = null!;
+
+    public bool IsConfirmed() => NewPassword == ConfirmNew;
 }

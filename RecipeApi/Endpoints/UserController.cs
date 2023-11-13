@@ -2,25 +2,26 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 using RecipeApi.Authentication.TransferObjects;
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Database.Extensions;
 using RecipeApi.Exceptions;
-using RecipeApi.Extensions;
 using RecipeApi.Helper;
 using RecipeApi.Parameters;
 using RecipeApi.Responses;
 using RecipeApi.Responses.TransferObjects;
-using System.ComponentModel.DataAnnotations;
+
 using System.Linq.Expressions;
 using System.Security.Claims;
 
 namespace RecipeApi.Endpoints;
 
 [Authorize(Roles = "Admin, User")]
-public class UserController : RecipeBaseController<User, UserParameter, Register, Update>
+public class UserController : RecipeBaseController<User, UserParameter, UserRegister, UserUpdate>
 {
     public UserController(RecipeDbContext dbContext) 
         : base(dbContext) { }
@@ -53,7 +54,7 @@ public class UserController : RecipeBaseController<User, UserParameter, Register
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public override async Task<IActionResult> Create([FromBody]Register register)
+    public override async Task<IActionResult> Create([FromBody]UserRegister register)
     { 
         if (DbContext.Users.Any(user => user.Email == register.Email) ||
             DbContext.Users.Any(user => user.Username == register.Username))
@@ -77,24 +78,70 @@ public class UserController : RecipeBaseController<User, UserParameter, Register
     }
 
     [HttpPost("update")]
-    public override async Task<IActionResult> Update([FromBody]Update update)
+    public override async Task<IActionResult> Update([FromBody]UserUpdate update)
     {
-        if (!string.IsNullOrWhiteSpace(update.Username))
+        if (!DbContext.Users.Any(user => user.Username == update.Username))
         {
-
+            throw HttpException.BadRequest(
+                $"Username {update.Username} is already taken!");
         }
+
+        if (!DbContext.Users.Any(user => user.Email == update.Email))
+        {
+            throw HttpException.BadRequest(
+                $"Email {update.Email} is already taken!");
+        }
+
+        User currentUser = this.CurrentUser;
+
+        currentUser.Update(update);
+
+        DbContext.Users.Update(currentUser);
+
+        await DbContext.SaveChangesAsync();
+
+        await this.HttpContext.SignOutAsync();
+
         return Ok();
     }
 
     [HttpPost("change-password")]
     public async Task<IActionResult> UpdatePassword([FromBody]UpdatePassword updatePassword)
     {
+        User currentUser = this.CurrentUser;
+        string hashOld = HashHelper.GenerateSHA512Hash(updatePassword.OldPassword);
 
+        if (hashOld != currentUser.Password)
+        {
+            throw HttpException.BadRequest("Old password was incorrect!");
+        }
+
+        if (!updatePassword.IsConfirmed())
+        {
+            throw HttpException.BadRequest("Passwords does not match!");
+        }
+
+        currentUser.UpdatePassword(updatePassword.NewPassword);
+
+        DbContext.Users.Update(currentUser);
+
+        await DbContext.SaveChangesAsync();
+
+        await this.HttpContext.SignOutAsync();
+
+        return Ok();
     }
 
     [HttpDelete("delete")]
     public override async Task<IActionResult> Delete()
     {
+        User user = this.CurrentUser;
+
+        DbContext.Users.Remove(user);
+
+        await DbContext.SaveChangesAsync(); 
+
+        await this.HttpContext.SignOutAsync();
 
         return Ok();
     }

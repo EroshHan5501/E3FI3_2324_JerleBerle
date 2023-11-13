@@ -2,7 +2,7 @@
 
 namespace RecipeApi.Authentication.TransferObjects;
 
-public class Register
+public class UserRegister
 {
     [Required]
     [EmailAddress]
