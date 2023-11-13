@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Database.Extensions;
+using RecipeApi.DataObjects.Recipe;
 using RecipeApi.Parameters;
 using RecipeApi.Responses;
 using RecipeApi.Responses.TransferObjects;
@@ -13,7 +14,7 @@ using System.Linq.Expressions;
 namespace RecipeApi.Endpoints;
 
 [Authorize(Roles = "User, Admin")]
-public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
+public class RecipeController : RecipeBaseController<Recipe, RecipeParameter, RecipeCreate, RecipeUpdate>
 {
     public RecipeController(RecipeDbContext dbContext)
         : base(dbContext)
@@ -26,7 +27,7 @@ public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
     {
         IEnumerable<Expression<Func<Recipe, bool>>> filters = parameter.ParseTo();
 
-        IQueryable<Recipe> query = DbContext.Recipes;
+        IQueryable<Recipe> query = this.DbContext.Recipes;
 
         foreach (Expression<Func<Recipe, bool>> filter in filters)
         {
@@ -41,14 +42,14 @@ public class RecipeController : RecipeBaseController<Recipe, RecipeParameter>
     }
 
     [HttpPost("create")]
-    public override async Task<IActionResult> Create()
+    public override async Task<IActionResult> Create(RecipeCreate create)
     {
 
         return Ok();
     }
 
     [HttpPost("update")]
-    public override async Task<IActionResult> Update()
+    public override async Task<IActionResult> Update(RecipeUpdate update)
     {
         return Ok();
     }
