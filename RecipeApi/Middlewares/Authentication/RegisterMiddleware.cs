@@ -28,7 +28,7 @@ public class RegisterMiddleware
     {
         if (context.Request.Path != "/api/register/")
         {
-            Next?.Invoke(context);
+            await Next(context);
             return;
         }
 
