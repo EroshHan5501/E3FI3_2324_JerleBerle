@@ -27,6 +27,8 @@ public class UserController : RecipeBaseController<User, UserParameter, UserRegi
     [HttpGet]
     public override async Task<IActionResult> Get([FromQuery]UserParameter parameter)
     {
+        // TODO: Refactor the code 
+
         IEnumerable<Expression<Func<User, bool>>> filters = parameter.ParseTo();
 
         IQueryable<User> query = DbContext.Users;

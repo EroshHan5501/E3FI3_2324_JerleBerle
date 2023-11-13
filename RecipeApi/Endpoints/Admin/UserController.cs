@@ -85,6 +85,7 @@ public class UserController : AdminBaseController<User, UserParameter, ExtendedU
         // Just update the password and notify the user via email 
 
         // Generates a default password and sends this within the email
+        // https://blog.elmah.io/how-to-send-emails-from-csharp-net-the-definitive-tutorial/
 
         throw new NotImplementedException();
     }
