@@ -75,13 +75,13 @@ app.UseCookiePolicy(new CookiePolicyOptions()
 
 app.UseCors("recipePolicy");
 
+app.UseStaticFiles();
+app.UseDefaultFiles();
+
 app.UseMiddleware<LoginMiddleware>();
 app.UseMiddleware<LogoutMiddleware>();
 
 app.UseAuthentication();
-
-app.UseStaticFiles();
-app.UseDefaultFiles();
 
 app.UseAuthorization();
 app.MapDefaultControllerRoute();

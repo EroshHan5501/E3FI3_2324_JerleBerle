@@ -13,4 +13,14 @@ public class Unit : IKeyEntity
     public string Name { get; set; }
 
     public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+
+    public Unit()
+    {
+        
+    }
+
+    public Unit(string name)
+    {
+        Name = name;
+    }
 }

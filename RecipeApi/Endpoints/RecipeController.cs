@@ -5,6 +5,7 @@ using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Database.Extensions;
 using RecipeApi.DataObjects.Recipe;
+using RecipeApi.Exceptions;
 using RecipeApi.Parameters;
 using RecipeApi.Responses;
 using RecipeApi.Responses.TransferObjects;
@@ -44,6 +45,25 @@ public class RecipeController : RecipeBaseController<Recipe, RecipeParameter, Re
     [HttpPost("create")]
     public override async Task<IActionResult> Create(RecipeCreate create)
     {
+        IEnumerable<Ingredient> ingreds = DbContext.Ingredients
+            .Where(ingred => create.IngredientIds.Contains(ingred.Id))
+            .ToList();
+
+        if (ingreds.Count() == 0)
+        {
+            throw HttpException.BadRequest("Ingredients does not exist!");
+        }
+
+        Recipe recipe = new Recipe(
+            create.Title,
+            create.Description,
+            create.ImageUrl,
+            this.CurrentUser,
+            ingreds);
+        
+        DbContext.Recipes.Add(recipe);  
+
+        await DbContext.SaveChangesAsync();
 
         return Ok();
     }

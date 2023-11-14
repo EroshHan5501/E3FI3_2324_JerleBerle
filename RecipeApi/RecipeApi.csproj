@@ -21,4 +21,8 @@
     <ProjectReference Include="..\RecipeCommon\RecipeCommon.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

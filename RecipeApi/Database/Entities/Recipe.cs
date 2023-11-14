@@ -30,5 +30,39 @@ public class Recipe : IKeyEntity
 
     [NotMapped]
     [JsonPropertyName("ingredients")]
-    public List<Ingredient> JsonIngredients => Ingredients.Select(x => x.Ingredient).ToList();  
+    public List<Ingredient> JsonIngredients => Ingredients.Select(x => x.Ingredient).ToList();
+
+    // Constructor is necessary for EF Core to work the correct way
+    public Recipe()
+    {
+
+    }
+
+    public Recipe(
+        string title,
+        string description,
+        string imageUrl,
+        User user, 
+        IEnumerable<Ingredient> create)
+    {
+        Title = title;
+        Description = description;
+        ImageUrl = imageUrl;
+        StartedAt = DateTime.UtcNow;
+        UserId = user.Id;
+        User = user;
+
+        foreach (Ingredient ingred in create)
+        {
+            IngredientRecipe mapping = new IngredientRecipe()
+            {
+                Ingredient = ingred,
+                IngredientId = ingred.Id,
+                RecipeId = Id,
+                Recipe = this
+            };
+
+            Ingredients.Add(mapping);
+        }
+    }
 }

@@ -27,4 +27,18 @@ public class Ingredient : IKeyEntity
     [NotMapped]
     [JsonPropertyName("recipes")]
     public List<Recipe> RecipeMapping => Recipes.Select(x => x.Recipe).ToList();
+
+    public Ingredient()
+    {
+
+    }
+
+    public Ingredient(string name, Unit unit, Amount amount)
+    {
+        Name = name;
+        UnitId = unit.Id;
+        Unit = unit;
+        AmountId = amount.Id;
+        Amount = amount;    
+    }
 }

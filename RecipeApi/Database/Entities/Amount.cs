@@ -13,4 +13,14 @@ public class Amount : IKeyEntity
     public int AmountValue { get; set; }
 
     public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+
+    public Amount()
+    {
+    
+    }
+
+    public Amount(int amountValue)
+    {
+        AmountValue = amountValue;
+    }
 }
