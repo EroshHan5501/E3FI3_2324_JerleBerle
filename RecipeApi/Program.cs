@@ -86,4 +86,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapDefaultControllerRoute();
 
+app.MapFallbackToFile("/index.html");
+
 app.Run();
