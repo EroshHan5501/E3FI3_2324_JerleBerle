@@ -1,4 +1,4 @@
-import { RouteNames } from "./RouteNames";
+import { RouteNames } from "./RouteNames.js";
 
 export class Navigator {
 
@@ -6,7 +6,7 @@ export class Navigator {
 
         let page = null;
 
-        switch(page) {
+        switch(path) {
             case RouteNames.login: {
                 const module = await import("/app/auth/login/login.js");
                 page = new module.LoginPage();
@@ -26,6 +26,7 @@ export class Navigator {
         }
 
         const main = document.querySelector("main");
+        main.innerText = "";
         main.appendChild(page);
     }
 }

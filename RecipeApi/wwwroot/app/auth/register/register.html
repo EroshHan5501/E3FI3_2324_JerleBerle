@@ -1,10 +1,14 @@
 <template>
+    <link rel="stylesheet" href="/app/auth/register/register.css">
     <div class="register-page">
         <h2>Registerpage</h2>
         <input type="text" id="email" placeholder="Email:">
         <input type="text" id="username" placeholder="Username:">
         <input type="password" id="password" placeholder="Password:">
-
-        <button type="button">Register</button>
+        <p>
+            You already have an account. <a id="go-login-link" href="login">Click here</a> to
+            go to the login page!
+        </p>
+        <button type="button" id="register-btn">Register</button>
     </div>
 </template>

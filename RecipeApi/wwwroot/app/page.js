@@ -19,10 +19,9 @@ export class BasePage extends HTMLElement {
     #pageConfig = null;
     #initCallback = null;
 
-    constructor(pageConfig, initCallback) {
+    constructor(pageConfig) {
         super();
         this.#pageConfig = pageConfig;
-        this.#initCallback = initCallback;
     } 
 
     async appendTemplate(path, node) {
@@ -42,6 +41,31 @@ export class BasePage extends HTMLElement {
         const html = await response.text();
         const parser = new DOMParser();
         return parser.parseFromString(html, "text/html");
+    }
+
+    async getData(url, errorCallback) {
+        return this.#makeRequest(url, method, null, errorCallback);
+    }
+
+    async sendData(url, payload, errorCallback) {
+        return this.#makeRequest(url, "POST", payload, errorCallback);
+    }
+
+    async #makeRequest(url, method, payload, errorCallback) {
+
+        const response = await fetch(url, {
+            method: method,
+            body: JSON.stringify(payload)
+        })
+
+        const data = await response.json();
+
+        if (response.status !== 200) {
+            errorCallback(response.status, data);
+            return;
+        }
+
+        return data;
     }
 
     async connectedCallback() {
