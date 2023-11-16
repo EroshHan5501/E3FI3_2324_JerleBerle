@@ -55,6 +55,7 @@ export class BasePage extends HTMLElement {
 
         const response = await fetch(url, {
             method: method,
+            headers: new Headers({'content-type': 'application/json'}),
             body: JSON.stringify(payload)
         })
 
