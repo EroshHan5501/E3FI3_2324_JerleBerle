@@ -9,5 +9,6 @@ public class IngredientModel
     [Column("Id")]
     public int Id { get; set; }
 
+    [StringLength(255)]
     public string Name { get; set; }
 }
