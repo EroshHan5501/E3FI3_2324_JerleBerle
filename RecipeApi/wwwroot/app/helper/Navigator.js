@@ -20,6 +20,11 @@ export class Navigator {
             case RouteNames.logout: {
 
             }
+            break;
+            case RouteNames.dashboard: {
+                const module = await import("/app/dashboard/dashboard.js");
+                page = new module.DashboardPage();
+            }
             default:
                 // Error page
                 break;
