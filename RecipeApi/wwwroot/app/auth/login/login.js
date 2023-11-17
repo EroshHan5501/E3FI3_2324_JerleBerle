@@ -1,6 +1,7 @@
 import { BasePage } from "/app/page.js";
 import { Navigator } from "../../helper/Navigator.js";
 import { RouteNames } from "../../helper/RouteNames.js";
+import { AppConfig } from "../../helper/AppConfig.js";
 
 export class LoginPage extends BasePage {
     constructor() {
@@ -12,7 +13,7 @@ export class LoginPage extends BasePage {
         await this.appendTemplate("app/auth/login/login.html", this);
 
         this.guiContent = {
-            usernameTxt: this.querySelector("#username"),
+            emailTxt: this.querySelector("#email"),
             passwordTxt: this.querySelector("#password"),
             loginBtn: this.querySelector("#login-btn"),
             goRegisterLink: this.querySelector("#go-register-link")
@@ -33,7 +34,24 @@ export class LoginPage extends BasePage {
 
     async #handleLoginBtnClick(event) {
         event.preventDefault();
+        
+        const payload = {
+            "email": this.guiContent.emailTxt.value,
+            "password": this.guiContent.passwordTxt.value
+        }
 
+        const url = AppConfig.buildApiPath("login");
+        await this.sendDataAsync(url, payload, this.#handleErrorResponse);
+
+        await Navigator.goToAsync(RouteNames.dashboard);
+    }
+
+    async #handleErrorResponse(statusCode, json) {
+        switch(statusCode) {
+            case 401:
+
+                break;
+        }
     }
 }
 

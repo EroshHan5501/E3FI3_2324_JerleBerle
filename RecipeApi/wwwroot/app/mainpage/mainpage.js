@@ -19,7 +19,8 @@ export class MainPage extends BasePage {
         navElements.forEach(navElem => {
             this.handleClick(navElem, async (event) => {
                 event.preventDefault();
-                const path = event.target.href;
+                const arr = event.target.href.split("/");
+                const path = arr[arr.length - 1];
                 await Navigator.goToAsync(path);
             });
         });

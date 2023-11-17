@@ -30,7 +30,7 @@ public class LoginMiddleware
             return;
         }
 
-        if (context.Request.Method != "POST") 
+        if (context.Request.Method != "Post") 
         {
             throw HttpException.MethodNotAllowed();
         }

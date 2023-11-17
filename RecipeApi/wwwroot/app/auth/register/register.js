@@ -43,7 +43,7 @@ export class RegisterPage extends BasePage {
         }
 
         const url = AppConfig.buildApiPath("User/register/");
-        this.sendData(url, payload, this.#handleResponseError.bind(this))
+        this.sendDataAsync(url, payload, this.#handleResponseError.bind(this))
     }
 
     async #handleResponseError(statusCode, json) {

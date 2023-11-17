@@ -12,8 +12,8 @@ export class LogoutPage extends BasePage {
     async initAsync() {
         await this.appendTemplate("/app/auth/logout/logout.html", this);
 
-        const url = AppConfig.apiBaseUrl("logout");
-        await this.getData(url, this.#onReceivingError);
+        const url = AppConfig.buildApiPath("logout");
+        await this.getDataAsync(url, this.#onReceivingError);
 
         await Navigator.goToAsync(RouteNames.login);
     }

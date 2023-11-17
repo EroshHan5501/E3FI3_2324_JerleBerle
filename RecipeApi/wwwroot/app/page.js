@@ -43,11 +43,11 @@ export class BasePage extends HTMLElement {
         return parser.parseFromString(html, "text/html");
     }
 
-    async getData(url, errorCallback) {
-        return this.#makeRequest(url, method, null, errorCallback);
+    async getDataAsync(url, errorCallback) {
+        return this.#makeRequest(url, "GET", null, errorCallback);
     }
 
-    async sendData(url, payload, errorCallback) {
+    async sendDataAsync(url, payload, errorCallback) {
         return this.#makeRequest(url, "POST", payload, errorCallback);
     }
 
@@ -56,10 +56,19 @@ export class BasePage extends HTMLElement {
         const response = await fetch(url, {
             method: method,
             headers: new Headers({'content-type': 'application/json'}),
-            body: JSON.stringify(payload)
         })
 
-        const data = await response.json();
+        if (payload !== null) {
+            response["body"] = JSON.stringify(payload);
+        }
+
+        let data;
+        try{
+            data = await response.json(); 
+        }
+        catch {
+            return "";
+        }
 
         if (response.status !== 200) {
             errorCallback(response.status, data);
