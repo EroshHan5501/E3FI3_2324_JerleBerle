@@ -21,7 +21,7 @@ CREATE TABLE UnitOfMeasurement(
     Name VARCHAR(100)
 );
 
-CREATE TABLE RI_Rel (
+CREATE TABLE RiuRel (
     RecipeId INTEGER REFERENCES Recipe(Id),
     IngredientId Integer REFERENCES Ingredient(Id),
     PRIMARY KEY (RecipeID, IngredientId),
@@ -293,6 +293,6 @@ INSERT INTO Recipe (name) VALUES
 ('Blini'),
 ('Tortilla Española');
 
-INSERT INTO RI_Rel (RecipeID, IngredientId) VALUES
+INSERT INTO RiuRel (RecipeID, IngredientId) VALUES
 (1,5),
 (1,6);
