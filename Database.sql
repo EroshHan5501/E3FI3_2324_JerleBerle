@@ -293,6 +293,13 @@ INSERT INTO Recipe (name) VALUES
 ('Blini'),
 ('Tortilla Española');
 
-INSERT INTO RiuRel (RecipeID, IngredientId) VALUES
-(1,5),
-(1,6);
+INSERT INTO UnitOfMeasurement (name) VALUES
+('kg'),
+('g'),
+('L'),
+('ml'),
+('Prise');
+
+INSERT INTO RiuRel (RecipeID, IngredientId, Quantity, UOMId) VALUES
+(1,5, 200, 2),
+(1,6, 300, 5);
