@@ -11,6 +11,11 @@ public class RecipeContext : DbContext
     {
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseMySql("server=localhost;database=recipeapp;pwd=root;password=", new MariaDbServerVersion("7.0.0"));
+    }
+
     public DbSet<Recipe> RecipeItems { get; set; } = null!;
     public DbSet<Ingredient> IngredientItems { get; set; } = null!;
 }
