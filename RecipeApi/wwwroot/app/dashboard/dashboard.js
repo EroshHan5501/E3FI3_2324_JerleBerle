@@ -11,7 +11,7 @@ export class DashboardPage extends MainPage {
 
         await this.appendTemplate("/app/dashboard/dashboard.html", this.getPageContentElement);
 
-
+        
     }
 }
 

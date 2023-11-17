@@ -18,7 +18,8 @@ export class Navigator {
             }
             break;
             case RouteNames.logout: {
-
+                const module = await import("/app/auth/logout/logout.js");
+                page = new module.LogoutPage();
             }
             break;
             case RouteNames.dashboard: {
