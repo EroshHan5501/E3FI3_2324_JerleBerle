@@ -22,11 +22,11 @@ CREATE TABLE UnitOfMeasurement(
 );
 
 CREATE TABLE RiuRel (
+    Id INTEGER AUTO_INCREMENT PRIMARY KEY,
     RecipeId INTEGER REFERENCES Recipe(Id),
     IngredientId Integer REFERENCES Ingredient(Id),
-    PRIMARY KEY (RecipeID, IngredientId),
     Quantity INTEGER,
-    UOM_Id INTEGER REFERENCES UnitOfMeasurement(Id)
+    UOMId INTEGER REFERENCES UnitOfMeasurement(Id)
 );
 
 -- Beispiel-Einfügungen für die 200 gängigsten Zutaten
