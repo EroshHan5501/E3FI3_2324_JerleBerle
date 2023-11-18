@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RecipeAPI.Database.Models;
 
 namespace RecipeAPI.Database
 {
@@ -10,5 +11,10 @@ namespace RecipeAPI.Database
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
+
+        DbSet<RecipeModel> Recipes { get; set; }
+        DbSet<IngredientModel> Ingredients { get; set; }
+        DbSet<UnitOfMeasurementModel> UnitsOfMeasurement { get; set; }
+        DbSet<RiuRelModel> RiuRels { get; set; }
     }
 }
