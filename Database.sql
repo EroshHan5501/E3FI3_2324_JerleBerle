@@ -26,7 +26,7 @@ CREATE TABLE RiuRel (
     RecipeId INTEGER REFERENCES Recipe(Id),
     IngredientId Integer REFERENCES Ingredient(Id),
     Quantity INTEGER,
-    UOMId INTEGER REFERENCES UnitOfMeasurement(Id)
+    UnitOfMeasurementId INTEGER REFERENCES UnitOfMeasurement(Id)
 );
 
 -- Beispiel-Einfügungen für die 200 gängigsten Zutaten
@@ -300,6 +300,6 @@ INSERT INTO UnitOfMeasurement (name) VALUES
 ('ml'),
 ('Prise');
 
-INSERT INTO RiuRel (RecipeID, IngredientId, Quantity, UOMId) VALUES
+INSERT INTO RiuRel (RecipeID, IngredientId, Quantity, UnitOfMeasurementId) VALUES
 (1,5, 200, 2),
 (1,6, 300, 5);

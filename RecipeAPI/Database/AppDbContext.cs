@@ -12,9 +12,9 @@ namespace RecipeAPI.Database
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
 
-        DbSet<RecipeModel> Recipes { get; set; }
-        DbSet<IngredientModel> Ingredients { get; set; }
-        DbSet<UnitOfMeasurementModel> UnitsOfMeasurement { get; set; }
-        DbSet<RiuRelModel> RiuRels { get; set; }
+        public DbSet<RecipeModel> Recipes { get; set; }
+        public DbSet<IngredientModel> Ingredients { get; set; }
+        public DbSet<UnitOfMeasurementModel> UnitsOfMeasurement { get; set; }
+        public DbSet<RiuRelModel> RiuRels { get; set; }
     }
 }
