@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeAPI.Database.Models;
 
+[Table("UnitOfMeasurement")]
 public class UnitOfMeasurementModel
 {
     [Key]

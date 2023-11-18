@@ -1,5 +1,8 @@
-﻿namespace RecipeAPI.Database.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RecipeAPI.Database.Models
 {
+    [Table("RiuRel")]
     public class RiuRelModel
     {
         public int Id { get; set; }
