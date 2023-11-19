@@ -21,12 +21,12 @@ CREATE TABLE UnitOfMeasurement(
     Name VARCHAR(100)
 );
 
-CREATE TABLE RI_Rel (
+CREATE TABLE RiuRel (
+    Id INTEGER AUTO_INCREMENT PRIMARY KEY,
     RecipeId INTEGER REFERENCES Recipe(Id),
     IngredientId Integer REFERENCES Ingredient(Id),
-    PRIMARY KEY (RecipeID, IngredientId),
     Quantity INTEGER,
-    UOM_Id INTEGER REFERENCES UnitOfMeasurement(Id)
+    UnitOfMeasurementId INTEGER REFERENCES UnitOfMeasurement(Id)
 );
 
 -- Beispiel-Einfügungen für die 200 gängigsten Zutaten
@@ -293,6 +293,13 @@ INSERT INTO Recipe (name) VALUES
 ('Blini'),
 ('Tortilla Española');
 
-INSERT INTO RI_Rel (RecipeID, IngredientId) VALUES
-(1,5),
-(1,6);
+INSERT INTO UnitOfMeasurement (name) VALUES
+('kg'),
+('g'),
+('L'),
+('ml'),
+('Prise');
+
+INSERT INTO RiuRel (RecipeID, IngredientId, Quantity, UnitOfMeasurementId) VALUES
+(1,5, 200, 2),
+(1,6, 300, 5);
