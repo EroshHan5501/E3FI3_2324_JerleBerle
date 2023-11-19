@@ -16,7 +16,8 @@ export class LoginPage extends BasePage {
             emailTxt: this.querySelector("#email"),
             passwordTxt: this.querySelector("#password"),
             loginBtn: this.querySelector("#login-btn"),
-            goRegisterLink: this.querySelector("#go-register-link")
+            goRegisterLink: this.querySelector("#go-register-link"),
+            mainErrTxt: this.querySelector("#main-error")
         }
 
         this.handleClick(
@@ -40,24 +41,33 @@ export class LoginPage extends BasePage {
             "password": this.guiContent.passwordTxt.value
         }
 
-        const url = AppConfig.buildApiPath("login");
+        const url = AppConfig.buildApiPath("login/");
         await this.sendDataAsync(
             url, 
             payload, 
             { 
                 400: this.#handle400Errors.bind(this), 
                 403: this.#handle403Errors.bind(this)
-            });
-
-        await Navigator.goToAsync(RouteNames.dashboard);
+            },
+            this.#handleSuccessAsync.bind(this));
     }
 
     #handle400Errors(statusCode, data) {
-
+        this.guiContent.mainErrTxt.innerText = "";
+        for (const err of data.errors) {
+            const errElem = document.createElement("span");
+            errElem.classList.add("error");
+            errElem.innerText = err;
+            this.guiContent.mainErrTxt.appendChild(errElem);
+        }
     }
 
     #handle403Errors(statusCode, data) {
 
+    }
+
+    async #handleSuccessAsync(data) {
+        await Navigator.goToAsync(RouteNames.dashboard);
     }
 }
 

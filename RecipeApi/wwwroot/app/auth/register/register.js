@@ -49,7 +49,8 @@ export class RegisterPage extends BasePage {
             { 
                 400: this.#handle400Error.bind(this), 
                 403: this.#handle403Error.bind(this)
-            })
+            },
+            this.#handleSuccessAsync.bind(this));
     }
 
     #handle400Error(statusCode, data) {
@@ -66,6 +67,10 @@ export class RegisterPage extends BasePage {
 
     #handle403Error(statusCode, data) {
 
+    }
+
+    async #handleSuccessAsync(data) {
+        await Navigator.goToAsync(RouteNames.dashboard);
     }
 }
 

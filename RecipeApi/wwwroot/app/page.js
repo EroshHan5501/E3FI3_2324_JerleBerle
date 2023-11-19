@@ -45,24 +45,25 @@ export class BasePage extends HTMLElement {
         return parser.parseFromString(html, "text/html");
     }
 
-    async getDataAsync(url, errorCallbacks) {
-        return this.#makeRequest(url, "GET", null, errorCallbacks);
+    async getDataAsync(url, errorCallbacks, successCallback) {
+        return this.#makeRequest(url, "GET", null, errorCallbacks, successCallback);
     }
 
-    async sendDataAsync(url, payload, errorCallbacks) {
-        return this.#makeRequest(url, "POST", payload, errorCallbacks);
+    async sendDataAsync(url, payload, errorCallbacks, successCallback) {
+        return this.#makeRequest(url, "POST", payload, errorCallbacks, successCallback);
     }
 
-    async #makeRequest(url, method, payload, errorCallbacks) {
-
-        const response = await fetch(url, {
+    async #makeRequest(url, method, payload, errorCallbacks, successCallback) {
+        const request = {
             method: method,
             headers: new Headers({'content-type': 'application/json'}),
-        })
+        }
 
         if (payload !== null) {
-            response["body"] = JSON.stringify(payload);
+            request["body"] = JSON.stringify(payload);
         }
+
+        const response = await fetch(url, request);
 
         let data;
         try{
@@ -72,25 +73,20 @@ export class BasePage extends HTMLElement {
             data = "";
         }
 
-        console.log(response.status);
-
         if (response.status !== 200) {
-            console.log("hello there was an error");
             await this.#handleErrorInternal(response.status, data, errorCallbacks);
             return;
         }
 
-        return data;
+        await successCallback(data);
     }
 
     async #handleErrorInternal(statusCode, data, errorCallbacks) {
-        console.log("Hello world");
         switch(statusCode) {
             case 400:
                 errorCallbacks["400"](statusCode, data);
                 break;
             case 401:
-                console.log("We are in the logging");
                 await Navigator.goToAsync(RouteNames.login);
                 break;
             case 403:

@@ -17,10 +17,15 @@ export class DashboardPage extends MainPage {
             url, 
             {
                 400: this.#handle400Error.bind(this)
-            });
+            },
+            this.#handleSuccessAsync.bind(this));
     }
 
     #handle400Error(statusCode, data) {
+
+    }
+
+    async #handleSuccessAsync(data) {
 
     }
 }

@@ -18,7 +18,8 @@ export class LogoutPage extends BasePage {
             {
                 400: this.#handle400Error.bind(this),
                 403: this.#handle403Error.bind(this)
-            });
+            },
+            this.#handleSuccessAsync.bind(this));
 
         await Navigator.goToAsync(RouteNames.login);
     }
@@ -29,6 +30,10 @@ export class LogoutPage extends BasePage {
 
     #handle403Error(statusCode, data) {
 
+    }
+
+    async #handleSuccessAsync(data) {
+        await Navigator.goToAsync(RouteNames.login);
     }
 }
 

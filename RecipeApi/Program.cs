@@ -33,7 +33,7 @@ builder.Services.AddAuthentication(options =>
     }
 
     options.ClaimsIssuer = "RecipeApp";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(0);
     options.Cookie = new CookieBuilder()
     {
         Name = "sid",
