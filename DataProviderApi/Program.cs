@@ -1,3 +1,5 @@
+using DataProviderApi.Models;
+
 namespace DataProviderApi
 {
     public class Program
@@ -7,6 +9,7 @@ namespace DataProviderApi
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
+            builder.Services.AddDbContext<RecipeContext>();
 
             WebApplication app = builder.Build();
 
