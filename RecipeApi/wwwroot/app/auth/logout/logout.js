@@ -13,12 +13,21 @@ export class LogoutPage extends BasePage {
         await this.appendTemplate("/app/auth/logout/logout.html", this);
 
         const url = AppConfig.buildApiPath("logout");
-        await this.getDataAsync(url, this.#onReceivingError);
+        await this.getDataAsync(
+            url, 
+            {
+                400: this.#handle400Error.bind(this),
+                403: this.#handle403Error.bind(this)
+            });
 
         await Navigator.goToAsync(RouteNames.login);
     }
 
-    async #onReceivingError(statusCode, json) {
+    #handle400Error(statusCode, data) {
+
+    }
+
+    #handle403Error(statusCode, data) {
 
     }
 }

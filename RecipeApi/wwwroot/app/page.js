@@ -7,6 +7,8 @@
 // - Handling errors 
 
 import { AppConfig } from "/app/helper/AppConfig.js";
+import { Navigator } from "/app/helper/Navigator.js";
+import { RouteNames } from "/app/helper/RouteNames.js";
 
 /*
  pageConfig 
@@ -43,15 +45,15 @@ export class BasePage extends HTMLElement {
         return parser.parseFromString(html, "text/html");
     }
 
-    async getDataAsync(url, errorCallback) {
-        return this.#makeRequest(url, "GET", null, errorCallback);
+    async getDataAsync(url, errorCallbacks) {
+        return this.#makeRequest(url, "GET", null, errorCallbacks);
     }
 
-    async sendDataAsync(url, payload, errorCallback) {
-        return this.#makeRequest(url, "POST", payload, errorCallback);
+    async sendDataAsync(url, payload, errorCallbacks) {
+        return this.#makeRequest(url, "POST", payload, errorCallbacks);
     }
 
-    async #makeRequest(url, method, payload, errorCallback) {
+    async #makeRequest(url, method, payload, errorCallbacks) {
 
         const response = await fetch(url, {
             method: method,
@@ -67,15 +69,34 @@ export class BasePage extends HTMLElement {
             data = await response.json(); 
         }
         catch {
-            return "";
+            data = "";
         }
 
+        console.log(response.status);
+
         if (response.status !== 200) {
-            errorCallback(response.status, data);
+            console.log("hello there was an error");
+            await this.#handleErrorInternal(response.status, data, errorCallbacks);
             return;
         }
 
         return data;
+    }
+
+    async #handleErrorInternal(statusCode, data, errorCallbacks) {
+        console.log("Hello world");
+        switch(statusCode) {
+            case 400:
+                errorCallbacks["400"](statusCode, data);
+                break;
+            case 401:
+                console.log("We are in the logging");
+                await Navigator.goToAsync(RouteNames.login);
+                break;
+            case 403:
+                errorCallbacks["403"](statusCode, data);
+                break;
+        }
     }
 
     async connectedCallback() {

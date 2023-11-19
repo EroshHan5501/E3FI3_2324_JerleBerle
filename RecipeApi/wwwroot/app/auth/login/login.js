@@ -41,17 +41,23 @@ export class LoginPage extends BasePage {
         }
 
         const url = AppConfig.buildApiPath("login");
-        await this.sendDataAsync(url, payload, this.#handleErrorResponse);
+        await this.sendDataAsync(
+            url, 
+            payload, 
+            { 
+                400: this.#handle400Errors.bind(this), 
+                403: this.#handle403Errors.bind(this)
+            });
 
         await Navigator.goToAsync(RouteNames.dashboard);
     }
 
-    async #handleErrorResponse(statusCode, json) {
-        switch(statusCode) {
-            case 401:
+    #handle400Errors(statusCode, data) {
 
-                break;
-        }
+    }
+
+    #handle403Errors(statusCode, data) {
+
     }
 }
 

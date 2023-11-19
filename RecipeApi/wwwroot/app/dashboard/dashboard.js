@@ -1,4 +1,5 @@
 import { MainPage } from "../mainpage/mainpage.js";
+import { AppConfig } from "../helper/AppConfig.js";
 
 export class DashboardPage extends MainPage {
     constructor() {
@@ -11,7 +12,16 @@ export class DashboardPage extends MainPage {
 
         await this.appendTemplate("/app/dashboard/dashboard.html", this.getPageContentElement);
 
-        
+        const url = AppConfig.buildApiPath("Recipe/")
+        await this.getDataAsync(
+            url, 
+            {
+                400: this.#handle400Error.bind(this)
+            });
+    }
+
+    #handle400Error(statusCode, data) {
+
     }
 }
 
