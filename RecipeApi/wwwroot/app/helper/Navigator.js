@@ -31,7 +31,7 @@ export class Navigator {
                 page = new module.RecipesPage();
             }
                 break;
-            case RouteNames.recipes: {
+            case RouteNames.settings: {
                 const module = await import("/app/settings/settings.js");
                 page = new module.SettingsPage();
             }
