@@ -49,7 +49,10 @@ public class UserController : RecipeBaseController<User, UserParameter, UserRegi
     public async Task<IActionResult> GetSingle()
     {
         User currentUser = this.CurrentUser;
-        return Ok(currentUser); 
+
+        UserResponseObject obj = new(currentUser, true);
+
+        return Ok(obj); 
     }
 
     [AllowAnonymous]

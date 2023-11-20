@@ -30,12 +30,28 @@ nav ul li {
     font-size: x-large;
 }
 
+nav ul li:active {
+    background-color: turquoise;
+}
+
 .nav-link:hover {
     text-decoration: underline;
+}
+
+.nav-link:active {
+    color: black;
 }
 
 .blocker-50px {
     position: relative;
     margin-top: 25px;
     margin-bottom: 25px;
+}
+
+#page-content {
+    position: relative;
+    width: 80%;
+    height: 90%;
+    padding: 10px;
+    left: 15%;
 }

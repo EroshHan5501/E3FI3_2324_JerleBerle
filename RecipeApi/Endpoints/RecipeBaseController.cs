@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 using RecipeApi.Database;
 using RecipeApi.Database.Entities;
 using RecipeApi.Exceptions;

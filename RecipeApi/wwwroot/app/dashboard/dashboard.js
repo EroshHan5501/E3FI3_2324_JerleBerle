@@ -12,7 +12,12 @@ export class DashboardPage extends MainPage {
 
         await this.appendTemplate("/app/dashboard/dashboard.html", this.getPageContentElement);
 
-        const url = AppConfig.buildApiPath("Recipe/")
+        this.guiContent = {
+            nameTxt: this.querySelector("#name-element"),
+            searchBox: this.querySelector("#search-bar")
+        }
+
+        const url = AppConfig.buildApiPath("User/current/");
         await this.getDataAsync(
             url, 
             {
@@ -22,11 +27,11 @@ export class DashboardPage extends MainPage {
     }
 
     #handle400Error(statusCode, data) {
-
+        
     }
 
     async #handleSuccessAsync(data) {
-
+        this.guiContent.nameTxt.innerText = data.username;
     }
 }
 
