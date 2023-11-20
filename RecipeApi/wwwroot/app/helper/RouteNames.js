@@ -5,4 +5,5 @@ export class RouteNames {
     static logout = "logout"
     static dashboard = "dashboard"
     static recipes = "recipes"
+    static settings = "settings"
 }

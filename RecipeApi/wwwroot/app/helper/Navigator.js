@@ -25,6 +25,17 @@ export class Navigator {
                 const module = await import("/app/dashboard/dashboard.js");
                 page = new module.DashboardPage();
             }
+                break;
+            case RouteNames.recipes: {
+                const module = await import("/app/recipes/recipes.js");
+                page = new module.RecipesPage();
+            }
+                break;
+            case RouteNames.recipes: {
+                const module = await import("/app/settings/settings.js");
+                page = new module.SettingsPage();
+            }
+                break;
             default:
                 // Error page
                 break;
