@@ -1,10 +1,9 @@
 import { RouteNames } from "./RouteNames.js";
 
 export class Navigator {
-
+    // TODO: Fix the history entries 
     static async goToAsync(path) {
         let page = null;
-
         switch (path) {
             case RouteNames.login: {
                 const module = await import("/app/auth/login/login.js");
@@ -31,6 +30,11 @@ export class Navigator {
                 page = new module.RecipesPage();
             }
                 break;
+            case RouteNames.createRecipe: {
+                const module = await import("/app/recipes/create/createRecipe.js");
+                page = new module.CreateRecipePage();
+            }
+                break;
             case RouteNames.settings: {
                 const module = await import("/app/settings/settings.js");
                 page = new module.SettingsPage();
@@ -41,6 +45,7 @@ export class Navigator {
                 break;
         }
 
+        console.log(path);
         window.history.pushState(null, null, path);
 
         const main = document.querySelector("main");

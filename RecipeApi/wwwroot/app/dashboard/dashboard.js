@@ -1,5 +1,7 @@
 import { MainPage } from "../mainpage/mainpage.js";
 import { AppConfig } from "../helper/AppConfig.js";
+import { Navigator } from "../helper/Navigator.js";
+import { RouteNames } from "../helper/RouteNames.js";
 
 export class DashboardPage extends MainPage {
     constructor() {
@@ -14,7 +16,8 @@ export class DashboardPage extends MainPage {
 
         this.guiContent = {
             nameTxt: this.querySelector("#name-element"),
-            searchBox: this.querySelector("#search-bar")
+            searchBox: this.querySelector("#search-bar"),
+            createRecipeLink: this.querySelector("#create-recipe-link")
         }
 
         const url = AppConfig.buildApiPath("User/current/");
@@ -24,6 +27,13 @@ export class DashboardPage extends MainPage {
                 400: this.#handle400Error.bind(this)
             },
             this.#handleSuccessAsync.bind(this));
+        
+        this.handleClick(
+            this.guiContent.createRecipeLink,
+            async (event) => {
+                event.preventDefault();
+                await Navigator.goToAsync(RouteNames.createRecipe);
+            });
     }
 
     #handle400Error(statusCode, data) {

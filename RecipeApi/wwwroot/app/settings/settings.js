@@ -8,6 +8,14 @@ export class SettingsPage extends MainPage {
 
     async initAsync() {
         await super.initAsync();
+
+        await this.appendTemplate(
+            "/app/settings/settings.html",
+            this.getPageContentElement);
+
+        this.guiContent = {
+            
+        }
     }
 }
 
