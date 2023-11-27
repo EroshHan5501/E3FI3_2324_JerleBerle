@@ -83,19 +83,21 @@ public class UserController : RecipeBaseController<User, UserParameter, UserRegi
     [HttpPost("update")]
     public override async Task<IActionResult> Update([FromBody]UserUpdate update)
     {
-        if (!DbContext.Users.Any(user => user.Username == update.Username))
+        User currentUser = this.CurrentUser;
+
+        if (DbContext.Users.Any(user => user.Username == update.Username) && 
+            currentUser.Username != update.Username)
         {
             throw HttpException.BadRequest(
                 $"Username {update.Username} is already taken!");
         }
 
-        if (!DbContext.Users.Any(user => user.Email == update.Email))
+        if (DbContext.Users.Any(user => user.Email == update.Email) && 
+            currentUser.Email != update.Email)
         {
             throw HttpException.BadRequest(
                 $"Email {update.Email} is already taken!");
         }
-
-        User currentUser = this.CurrentUser;
 
         currentUser.Update(update);
 

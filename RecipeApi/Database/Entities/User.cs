@@ -51,8 +51,8 @@ public class User : IKeyEntity
 
     public void Update(UserUpdate data)
     {
-        data.Email = Email;
-        data.Username = Username;
+        Username = data.Username;
+        Email = data.Email;
     }
 
     public void UpdatePassword(string newPassword)

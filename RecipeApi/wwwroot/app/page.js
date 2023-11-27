@@ -24,7 +24,7 @@ export class BasePage extends HTMLElement {
     constructor(pageConfig) {
         super();
         this.#pageConfig = pageConfig;
-    } 
+    }
 
     async appendTemplate(path, node) {
         const html = await this.#loadTemplate(path);
@@ -56,7 +56,7 @@ export class BasePage extends HTMLElement {
     async #makeRequest(url, method, payload, errorCallbacks, successCallback) {
         const request = {
             method: method,
-            headers: new Headers({'content-type': 'application/json'}),
+            headers: new Headers({ 'content-type': 'application/json' }),
         }
 
         if (payload !== null) {
@@ -66,8 +66,8 @@ export class BasePage extends HTMLElement {
         const response = await fetch(url, request);
 
         let data;
-        try{
-            data = await response.json(); 
+        try {
+            data = await response.json();
         }
         catch {
             data = "";
@@ -82,7 +82,7 @@ export class BasePage extends HTMLElement {
     }
 
     async #handleErrorInternal(statusCode, data, errorCallbacks) {
-        switch(statusCode) {
+        switch (statusCode) {
             case 400:
                 errorCallbacks["400"](statusCode, data);
                 break;
@@ -97,7 +97,7 @@ export class BasePage extends HTMLElement {
 
     async connectedCallback() {
         document.title = `${this.#pageConfig["title"]} - Recipedia`;
-        
+
         await this.#initCallback();
     }
 

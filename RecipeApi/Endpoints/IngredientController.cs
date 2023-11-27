@@ -20,7 +20,7 @@ public class IngredientController : RecipeBaseController<Ingredient, IngredientP
     }
 
     [HttpGet]
-    public override async Task<IActionResult> Get(IngredientParameter parameter)
+    public override async Task<IActionResult> Get([FromQuery]IngredientParameter parameter)
     {
         IEnumerable<Expression<Func<Ingredient, bool>>> filters = parameter.ParseTo();
 

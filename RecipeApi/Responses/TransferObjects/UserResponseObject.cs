@@ -12,6 +12,8 @@ public class UserResponseObject
 
     public string Username { get; set; }
 
+    public string Email { get; set; }
+
     public Role Role { get; set; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
@@ -21,6 +23,7 @@ public class UserResponseObject
     {
         Id = user.Id;
         Username = user.Username;
+        Email = user.Email; 
         Role = user.Role;
         Recipes = includeRecipes ? user.Recipes.Select(x => new RecipeResponseObject(x, false)).ToList() : default;
     }
