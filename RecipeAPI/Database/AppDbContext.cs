@@ -17,18 +17,20 @@ namespace RecipeAPI.Database
         public DbSet<UnitOfMeasurementModel> UnitsOfMeasurement { get; set; } = null!;
         public DbSet<RiuRelModel> RiuRels { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<RiuRelModel>().HasOne(x => x.Recipe).WithMany(x => x.Relations).HasForeignKey(x => x.RecipeId);
-            modelBuilder.Entity<RiuRelModel>().HasOne(x => x.Ingredient).WithMany(x => x.Relations).HasForeignKey(x => x.IngredientId);
-            modelBuilder.Entity<RiuRelModel>().HasOne(x => x.UnitOfMeasurement).WithMany(x => x.Relations).HasForeignKey(x => x.UnitOfMeasurementId);
-            modelBuilder.Entity<RecipeModel>().Navigation(x => x.Relations).AutoInclude();
-            modelBuilder.Entity<IngredientModel>().Navigation(x => x.Relations).AutoInclude();
-            modelBuilder.Entity<UnitOfMeasurementModel>().Navigation(x => x.Relations).AutoInclude();
-            modelBuilder.Entity<RiuRelModel>().Navigation(x => x.Recipe).AutoInclude();
-            modelBuilder.Entity<RiuRelModel>().Navigation(x => x.Ingredient).AutoInclude();
-            //modelBuilder.Entity<RiuRelModel>().Navigation(x => x.UnitOfMeasurement).AutoInclude();
-        }
+        // protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     base.OnModelCreating(modelBuilder);
+        //     modelBuilder.Entity<RiuRelModel>().HasOne(x => x.Recipe).WithMany(x => x.Relations).HasForeignKey(x => x.RecipeId);
+        //     modelBuilder.Entity<RiuRelModel>().HasOne(x => x.Ingredient).WithMany(x => x.Relations).HasForeignKey(x => x.IngredientId);
+        //     modelBuilder.Entity<RiuRelModel>().HasOne(x => x.UnitOfMeasurement).WithMany().HasForeignKey(x => x.UnitOfMeasurementId);
+
+        //     modelBuilder.Entity<RecipeModel>().Navigation(x => x.Relations).AutoInclude();
+        //     modelBuilder.Entity<IngredientModel>().Navigation(x => x.Relations).AutoInclude();
+        //     //modelBuilder.Entity<UnitOfMeasurementModel>().Navigation(x => x.Relations).AutoInclude();
+
+        //     //modelBuilder.Entity<RiuRelModel>().Navigation(x => x.Recipe).AutoInclude();
+        //     //modelBuilder.Entity<RiuRelModel>().Navigation(x => x.Ingredient).AutoInclude();
+        //     //modelBuilder.Entity<RiuRelModel>().Navigation(x => x.UnitOfMeasurement).AutoInclude();
+        // }
     }
 }

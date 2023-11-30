@@ -12,5 +12,4 @@ public class IngredientModel
 
     [StringLength(255)]
     public string Name { get; set; }
-    public List<RiuRelModel> Relations { get; set; }
 }

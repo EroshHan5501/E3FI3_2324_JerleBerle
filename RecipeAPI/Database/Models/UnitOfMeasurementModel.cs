@@ -12,5 +12,5 @@ public class UnitOfMeasurementModel
 
     [StringLength(100)]
     public string Name { get; set; } = null!;
-    public List<RiuRelModel> Relations { get; set; }
+    //public List<RiuRelModel> Relations { get; set; }
 }
