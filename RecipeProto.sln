@@ -7,12 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeApi", "RecipeApi\Reci
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeClient", "RecipeClient\RecipeClient.csproj", "{84C43ED4-E205-4D7C-8D3A-E7232EE93656}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeCommon", "RecipeCommon\RecipeCommon.csproj", "{D75EE145-4884-4E57-925B-3AF01C63BDBA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{77A07E37-2DC1-4F34-8CB8-75A808BC90D4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeCommon.Tests", "RecipeCommon.Tests\RecipeCommon.Tests.csproj", "{549F3F64-C0D3-42D3-9E2E-C7D47B32807C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
