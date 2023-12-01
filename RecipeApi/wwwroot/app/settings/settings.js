@@ -84,7 +84,6 @@ export class SettingsPage extends MainPage {
         const url = AppConfig.buildApiPath("User/delete");
         await this.deleteDataAsync(
             url,
-            null,
             {
                 400: (statusCode, data) => console.log(data)
             },
