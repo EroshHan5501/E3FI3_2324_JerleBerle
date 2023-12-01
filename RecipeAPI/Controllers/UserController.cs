@@ -3,15 +3,17 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 using RecipeApi.Helper;
-using RecipeAPI.Controllers;
+
 using RecipeAPI.Database;
 using RecipeAPI.Database.Models;
 using RecipeAPI.DataObjects.Users;
 using RecipeAPI.Exceptions;
+
 using System.Security.Claims;
 
-namespace RecipeApi.Endpoints;
+namespace RecipeAPI.Controllers;
 
 [Authorize(Roles = "Admin, User")]
 public class UserController : BaseController
