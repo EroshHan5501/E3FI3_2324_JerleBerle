@@ -5,10 +5,18 @@ DROP DATABASE IF EXISTS recipeapp;
 CREATE DATABASE recipeapp;
 USE recipeapp;
 
+CREATE TABLE User(
+    userId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password TEXT NOT NULL,
+    role INT NOT NULL
+);
 
 CREATE TABLE Recipe(
     Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(100)
+    Name VARCHAR(100),
+    userId INTEGER REFERENCES User(userId)
 );
 
 CREATE TABLE Ingredient(
