@@ -29,13 +29,13 @@ public class UserModel
 
     //public List<Recipe> Recipes { get; set; } = new List<Recipe>();
 
-    public User(string username, string email, string password)
+    public UserModel(string username, string email, string password)
         : this(username, email, password, Role.User)
     {
 
     }
 
-    public User(string username, string email, string password, Role role)
+    public UserModel(string username, string email, string password, Role role)
     {
         Username = username;
         Email = email;

@@ -52,7 +52,6 @@ public class LoginMiddleware
             throw HttpException.BadRequest("Email or password are incorrect!");
         }
 
-        // TODO: Create task for the hashing bug fix 
         string hashedPassword = HashHelper.GenerateSHA512Hash(creds.Password);
 
         if (user.Password != hashedPassword)
