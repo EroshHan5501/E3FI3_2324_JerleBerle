@@ -53,6 +53,10 @@ export class BasePage extends HTMLElement {
         return this.#makeRequest(url, "POST", payload, errorCallbacks, successCallback);
     }
 
+    async deleteDataAsync(url, errorCallbacks, successCallback) {
+        return this.#makeRequest(url, 'DELETE', errorCallbacks, successCallback);
+    }
+
     async #makeRequest(url, method, payload, errorCallbacks, successCallback) {
         const request = {
             method: method,

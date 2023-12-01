@@ -1,0 +1,44 @@
+.settings-page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* .scrolling {
+    overflow: scroll;
+} */
+
+.section {
+    position: relative;
+    width: 80%;
+    height: 45%;
+    left: 10%;
+    background-color: rgb(58, 58, 58);
+    margin-bottom: 20px;
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+}
+
+button {
+    position: relative;
+    width: 20%;
+    left: 20%;
+    font-size: large;
+    margin-top: 50px;
+    height: 40px;
+}
+
+input {
+    position: relative;
+    width: 60%;
+    height: 30px;
+    left: 10%;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}
+
+h3 {
+    margin-bottom: 20px;
+    text-decoration: underline;
+}

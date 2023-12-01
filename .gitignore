@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 **\bin
 **\obj
 
@@ -7,3 +8,12 @@
 **/TestResults
 
 **/secrets.*
+=======
+**/bin
+**/obj
+
+**/.vs
+**/.vscode
+
+**/*.swp
+>>>>>>> b49452a4d07c8504a6572a3a9dde58cb9c836e4e

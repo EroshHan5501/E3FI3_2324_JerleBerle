@@ -1,18 +1,16 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-
-using RecipeApi.Authentication;
-using RecipeApi.Database;
-using RecipeApi.Middlewares;
-using RecipeApi.Middlewares.Authentication;
-
+using RecipeAPI.Authentication;
+using RecipeAPI.Authentication.Middleware;
+using RecipeAPI.Database;
+using RecipeAPI.Exceptions;
 using System.Text.Json.Serialization;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
 
-builder.Services.AddDbContext<RecipeDbContext>();
+builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
