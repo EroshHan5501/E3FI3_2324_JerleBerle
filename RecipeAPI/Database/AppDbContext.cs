@@ -5,7 +5,7 @@ namespace RecipeAPI.Database
 {
     public class AppDbContext : DbContext
     {
-        string connectionString = "Server=localhost; User=root; Password=Gatling762; Database=recipeapp";
+        string connectionString = "Server=localhost;User=root;Password=l_N'TsAn6#:Am&V}\\/^lz%2_$=N{+{D~*M;Database=recipeapp";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

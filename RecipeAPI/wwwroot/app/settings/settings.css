@@ -4,6 +4,10 @@
     height: 100%;
 }
 
+/* .scrolling {
+    overflow: scroll;
+} */
+
 .section {
     position: relative;
     width: 80%;

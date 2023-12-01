@@ -86,7 +86,7 @@ public class UserController : AdminBaseController
         throw new NotImplementedException();
     }
 
-    [HttpDelete("delete")]
+    //[HttpDelete("delete")]
     public async Task<IActionResult> DeleteUserBy(UserDelete delete)
     {
         UserModel? user = DbContext.Users

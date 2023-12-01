@@ -1,5 +1,7 @@
 import { MainPage } from "../mainpage/mainpage.js";
 import { AppConfig } from "../helper/AppConfig.js";
+import { Navigator } from "../helper/Navigator.js";
+import { RouteNames } from "../helper/RouteNames.js";
 
 export class SettingsPage extends MainPage {
     static roleMapping = {
@@ -27,7 +29,8 @@ export class SettingsPage extends MainPage {
             oldPasswordTxt: this.querySelector("#old"),
             newPasswordTxt: this.querySelector("#new"),
             confirmPasswordTxt: this.querySelector("#confirm"),
-            changeBtn: this.querySelector("#change")
+            changeBtn: this.querySelector("#change"),
+            deleteBtn: this.querySelector("#delete-button")
         }
 
         const url = AppConfig.buildApiPath("User/current/");
@@ -45,6 +48,10 @@ export class SettingsPage extends MainPage {
         this.handleClick(
             this.guiContent.changeBtn,
             this.#onChangeButtonClick.bind(this));
+
+        this.handleClick(
+            this.guiContent.deleteBtn,
+            this.#onDeleteButtonClick.bind(this));
     }
 
     #handle400Error(statusCode, json) {
@@ -69,6 +76,18 @@ export class SettingsPage extends MainPage {
         await this.sendDataAsync(url, payload, {
             400: (statusCode, data) => console.log(data)
         }, () => { });
+    }
+
+    async #onDeleteButtonClick(event) {
+        event.preventDefault();
+
+        const url = AppConfig.buildApiPath("User/delete");
+        await this.deleteDataAsync(
+            url,
+            {
+                400: (statusCode, data) => console.log(data)
+            },
+            async () => await Navigator.goToAsync(RouteNames.login));
     }
 
     async #onChangeButtonClick(event) {
