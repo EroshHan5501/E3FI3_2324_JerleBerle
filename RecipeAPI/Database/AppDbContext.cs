@@ -13,9 +13,14 @@ namespace RecipeAPI.Database
         }
 
         public DbSet<RecipeModel> Recipes { get; set; } = null!;
+
         public DbSet<IngredientModel> Ingredients { get; set; } = null!;
+
         public DbSet<UnitOfMeasurementModel> UnitsOfMeasurement { get; set; } = null!;
+
         public DbSet<RiuRelModel> RiuRels { get; set; } = null!;
+        
+        public DbSet<UserModel> Users { get; set; } = null!;
 
         // protected override void OnModelCreating(ModelBuilder modelBuilder)
         // {
