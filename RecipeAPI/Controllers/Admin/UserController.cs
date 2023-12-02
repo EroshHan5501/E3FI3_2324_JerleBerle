@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RecipeAPI.Database.Models;
 using RecipeAPI.DataObjects.Users;
 using RecipeAPI.Exceptions;
-using RecipeAPI.Extensions;
 using RecipeApi.Helper;
-using RecipeAPI.Responses;
-using System.Linq.Expressions;
 using RecipeAPI.Database;
 
 namespace RecipeAPI.Controllers.Admin;
 
+[Route("api/admin/[controller]")]
 public class UserController : AdminBaseController
 {
     public UserController(AppDbContext dbContext) : base(dbContext)
@@ -18,14 +15,14 @@ public class UserController : AdminBaseController
 
     }
 
-    //public override async Task<IActionResult> Get(UserParameter parameter)
+    //public override async Task<IActionResult> Get()
     //{
     //    // We want to exclude the recipes on database request 
-    //    IEnumerable<Expression<Func<User, bool>>> filters = parameter.ParseTo();
+    //    IEnumerable<Expression<Func<UserModel, bool>>> filters = parameter.ParseTo();
 
-    //    IQueryable<User> query = DbContext.Users;
+    //    IQueryable<UserModel> query = DbContext.Users;
 
-    //    foreach (Expression<Func<User, bool>> filter in filters)
+    //    foreach (Expression<Func<UserModel, bool>> filter in filters)
     //    {
     //        query = query.Where(filter);
     //    }
@@ -86,7 +83,7 @@ public class UserController : AdminBaseController
         throw new NotImplementedException();
     }
 
-    //[HttpDelete("delete")]
+    [HttpDelete("delete")]
     public async Task<IActionResult> DeleteUserBy(UserDelete delete)
     {
         UserModel? user = DbContext.Users
@@ -112,11 +109,5 @@ public class UserController : AdminBaseController
         await DbContext.SaveChangesAsync();
 
         return Ok();
-    }
-
-    public async Task<IActionResult> Delete()
-    {
-        // Possible to delete every user 
-        return NotFound();
     }
 }
