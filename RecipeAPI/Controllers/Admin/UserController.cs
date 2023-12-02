@@ -4,6 +4,9 @@ using RecipeAPI.DataObjects.Users;
 using RecipeAPI.Exceptions;
 using RecipeApi.Helper;
 using RecipeAPI.Database;
+using RecipeAPI.Responses;
+using RecipeApi.Parameters;
+using RecipeAPI.Extensions;
 
 namespace RecipeAPI.Controllers.Admin;
 
@@ -15,37 +18,19 @@ public class UserController : AdminBaseController
 
     }
 
-    //public override async Task<IActionResult> Get()
-    //{
-    //    // We want to exclude the recipes on database request 
-    //    IEnumerable<Expression<Func<UserModel, bool>>> filters = parameter.ParseTo();
+    public async Task<IActionResult> Get([FromQuery]UserParameter parameter)
+    {
+        IQueryable<UserModel> query = DbContext.Users
+            .Where(x => x.Username.Contains(parameter.Username));
 
-    //    IQueryable<UserModel> query = DbContext.Users;
+        PagedEntityResponse<UserResponseObject> results = await query
+            .Select(user => new UserResponseObject(user, false))
+            .ToPageAsync(parameter.PageIndex, parameter.PageSize);
 
-    //    foreach (Expression<Func<UserModel, bool>> filter in filters)
-    //    {
-    //        query = query.Where(filter);
-    //    }
+        // TODO: Use same code base 
 
-    //    PagedEntityResponse<UserResponseObject> results = await query
-    //        .Select(user => new UserResponseObject(user, false)) // TODO: Rethink how we can exclude recipes from loading when requesting from database
-    //        .ToPageAsync(parameter.PageIndex, parameter.PageSize);
-
-    //    // TODO: Use same code base 
-
-    //    return Ok(results);
-    //}
-
-    //[HttpGet("roles")]
-    //public async Task<IActionResult> GetRoles()
-    //{
-    //    IQueryable<string> query = DbContext.Users
-    //        .GroupBy(user => user.Role);
-
-    //    PagedEntityResponse<string> result = await query.ToPageAsync(1, 20);
-
-    //    return Ok(result);
-    //}
+        return Ok(results);
+    }
 
     [HttpPost("create")]
     public async Task<IActionResult> Create(ExtendedUserRegister register)
