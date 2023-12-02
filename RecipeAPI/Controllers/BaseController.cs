@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RecipeAPI.Database;
 using RecipeAPI.Database.Models;
 using RecipeAPI.Exceptions;
@@ -8,6 +9,7 @@ namespace RecipeAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "User, Admin")]
 public abstract class BaseController : ControllerBase
 {
     public AppDbContext DbContext { get; set; }
