@@ -27,8 +27,6 @@ public class UserController : AdminBaseController
             .Select(user => new UserResponseObject(user, false))
             .ToPageAsync(parameter.PageIndex, parameter.PageSize);
 
-        // TODO: Use same code base 
-
         return Ok(results);
     }
 
