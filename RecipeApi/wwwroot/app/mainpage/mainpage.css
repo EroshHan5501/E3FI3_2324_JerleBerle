@@ -48,6 +48,10 @@ nav ul li:active {
     margin-bottom: 25px;
 }
 
+.invisible {
+    display: none;
+}
+
 #page-content {
     position: relative;
     width: 80%;
