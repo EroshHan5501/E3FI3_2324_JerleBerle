@@ -1,25 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+
 using RecipeAPI.Database;
 using RecipeAPI.Database.Models;
 
-namespace RecipeAPI.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UnitOfMeasurementController : ControllerBase
-    {
-        private readonly AppDbContext _context;
-        
-        public UnitOfMeasurementController(AppDbContext context)
-        {
-            _context = context;
-        }
+namespace RecipeAPI.Controllers;
 
-        [HttpGet]
-        public IEnumerable<UnitOfMeasurementModel> Get()
-        {
-            return _context.UnitsOfMeasurement.ToList();
-        }
+public class UnitOfMeasurementController : BaseController
+{    
+    public UnitOfMeasurementController(AppDbContext context) : base(context)
+    {
+    }
+
+    [HttpGet]
+    public IEnumerable<UnitOfMeasurementModel> Get()
+    {
+        return DbContext.UnitsOfMeasurement.ToList();
     }
 }
