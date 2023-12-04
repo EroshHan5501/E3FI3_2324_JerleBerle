@@ -42,6 +42,10 @@ nav ul li:active {
     color: black;
 }
 
+.invisible {
+    display: none;
+}
+
 .blocker-50px {
     position: relative;
     margin-top: 25px;

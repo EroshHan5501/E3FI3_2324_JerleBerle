@@ -40,6 +40,10 @@ export class Navigator {
                 page = new module.SettingsPage();
             }
                 break;
+            case RouteNames.admin: {
+                const module = await import("/app/admin/admin.js");
+                page = new module.AdminPage();
+            }
             default:
                 // Error page
                 break;

@@ -27,7 +27,7 @@ export class BasePage extends HTMLElement {
     }
 
     async appendTemplate(path, node) {
-        const html = await this.#loadTemplate(path);
+        const html = await this.loadTemplateAsync(path);
         const template = html.querySelector("template");
         if (template === undefined) {
             throw new Error("Could not found template tag!");
@@ -36,7 +36,7 @@ export class BasePage extends HTMLElement {
         node.appendChild(content);
     }
 
-    async #loadTemplate(path) {
+    async loadTemplateAsync(path) {
         const url = AppConfig.buildPath(path);
         console.log(url);
         const response = await fetch(url);
