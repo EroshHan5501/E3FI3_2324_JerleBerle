@@ -61,7 +61,9 @@ public class LoginMiddleware
 
         ClaimsPrincipal principal = user.GeneratePrincipal();
 
-        await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        await context.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme, 
+            principal);
 
         context.Response.StatusCode = (int)HttpStatusCode.OK;
 
