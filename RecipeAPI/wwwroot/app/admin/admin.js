@@ -19,7 +19,6 @@ export class AdminPage extends MainPage {
         }
 
         const url = AppConfig.buildApiPath("admin/User/?pageIndex=1&pageSize=1");
-        // TODO: Parameter building 
 
         this.getDataAsync(
             url,
@@ -32,15 +31,17 @@ export class AdminPage extends MainPage {
 
     async #initTableAsync(json) {
 
-        const template = await this.loadTemplateAsync(
+        const template = await this.getTemplateContentAsync(
             "/app/admin/snippets/row.html");
 
-        for (const user in json.entities) {
+        for (const user of json.content) {
             const tmp = template.cloneNode(true);
             const id = tmp.querySelector(".id-cell"),
                 username = tmp.querySelector(".username-cell"),
                 email = tmp.querySelector(".email-cell"),
                 role = tmp.querySelector(".role-cell");
+
+            console.log(user);
 
             id.innerText = user.id;
             username.innerText = user.username;

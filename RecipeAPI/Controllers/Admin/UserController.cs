@@ -20,7 +20,7 @@ public class UserController : AdminBaseController
     public async Task<IActionResult> Get([FromQuery] UserParameter parameter)
     {
         IQueryable<UserModel> query = DbContext.Users
-            .Where(x => x.Username.Contains(parameter.Username));
+            .Where(x => parameter.Username != null ? x.Username.Contains(parameter!.Username) : true);
 
         PagedEntityResponse<UserResponseObject> results = await query
             .Select(user => new UserResponseObject(user, false))

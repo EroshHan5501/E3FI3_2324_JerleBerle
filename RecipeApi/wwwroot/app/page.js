@@ -27,18 +27,22 @@ export class BasePage extends HTMLElement {
     }
 
     async appendTemplate(path, node) {
-        const html = await this.loadTemplateAsync(path);
+        const content = await this.getTemplateContentAsync(path);
+        node.appendChild(content);
+    }
+
+    async getTemplateContentAsync(path) {
+        const html = await this.#loadTemplateAsync(path);
         const template = html.querySelector("template");
         if (template === undefined) {
             throw new Error("Could not found template tag!");
         }
         const content = template.content.cloneNode(true);
-        node.appendChild(content);
+        return content;
     }
 
-    async loadTemplateAsync(path) {
+    async #loadTemplateAsync(path) {
         const url = AppConfig.buildPath(path);
-        console.log(url);
         const response = await fetch(url);
         const html = await response.text();
         const parser = new DOMParser();
