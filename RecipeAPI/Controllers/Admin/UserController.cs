@@ -10,7 +10,6 @@ using RecipeAPI.Extensions;
 
 namespace RecipeAPI.Controllers.Admin;
 
-[Route("api/admin/[controller]")]
 public class UserController : AdminBaseController
 {
     public UserController(AppDbContext dbContext) : base(dbContext)
