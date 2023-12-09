@@ -5,12 +5,17 @@ namespace RecipeAPI.Database
 {
     public class AppDbContext : DbContext
     {
-        string connectionString = "Server=localhost; User=root; Password=Gatling762; Database=recipeapp";
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     DBUser user = DBUserHandler.GetUserData();
+        //     // //string connectionString = "Server=localhost; User=root; Password=Gatling762; Database=recipeapp";
+        //     string connectionString = $"Server={user.Server}; User={user.Name}; Password={user.Password}; Database={user.Database}";
+        //     Console.Write(connectionString);
+        //     base.OnConfiguring(optionsBuilder);
+        //     optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        // }
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<RecipeModel> Recipes { get; set; } = null!;
         public DbSet<IngredientModel> Ingredients { get; set; } = null!;
