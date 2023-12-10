@@ -1,14 +1,22 @@
+
 -- CREATE USER IF NOT EXISTS 'chef'@'localhost' IDENTIFIED BY 'cook123';
 -- GRANT ALL PRIVILEGES ON recipeapp TO 'chef'@'localhost' WITH GRANT OPTION;
-
 DROP DATABASE IF EXISTS recipeapp;
 CREATE DATABASE recipeapp;
 USE recipeapp;
 
+CREATE TABLE User(
+    userId INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password TEXT NOT NULL,
+    role INT NOT NULL
+);
 
 CREATE TABLE Recipe(
     Id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(100)
+    Name VARCHAR(100),
+    userId INTEGER REFERENCES User(userId)
 );
 
 CREATE TABLE Ingredient(
@@ -240,58 +248,61 @@ INSERT INTO Ingredient (name) VALUES
 ('Zitronenzeste'),
 ('Orangenzeste');
 
+INSERT INTO User(username, email, password, role) VALUE 
+('user1', 'user1@gmail.com', '+5l9XAHrz5Ytggs7Dn+L/ut/S9M3zINoLyr5DSUsIMXYV0S3xruU9IE59pCmHkrTF9YQfkMQ78AW2ShyZrUXKw==', 1),
+('user2', 'user2@gmail.com', '+5l9XAHrz5Ytggs7Dn+L/ut/S9M3zINoLyr5DSUsIMXYV0S3xruU9IE59pCmHkrTF9YQfkMQ78AW2ShyZrUXKw==', 0);
 
 -- Beispiel-Einfügungen für 50 gängige Rezepte in Europa
-INSERT INTO Recipe (name) VALUES
-('Paella'),
-('Lasagne'),
-('Fish and Chips'),
-('Moussaka'),
-('Wiener Schnitzel'),
-('Ratatouille'),
-('Gulaschsuppe'),
-('Borschtsch'),
-('Couscous'),
-('Tzatziki'),
-('Pierogi'),
-('Haggis'),
-('Köttbullar'),
-('Tiramisu'),
-('Sauerbraten'),
-('Bouillabaisse'),
-('Moules-frites'),
-('Coq au Vin'),
-('Goulash'),
-("Shepherd's Pie"),
-('Carbonara'),
-('Sarma'),
-('Baklava'),
-('Rösti'),
-('Kebab'),
-('Sarma'),
-('Tarte Tatin'),
-('Plov'),
-('Irish Stew'),
-('Ceviche'),
-('Linsensuppe'),
-('Cordon Bleu'),
-('Raclette'),
-('Pilaf'),
-('Gazpacho'),
-('Baba Ganoush'),
-('Maultaschen'),
-('Bruschetta'),
-('Spanakopita'),
-('Wassail'),
-('Himmel und Erde'),
-('Paprikash'),
-('Colcannon'),
-('Karelian Pasties'),
-('Pisto'),
-('Kedgeree'),
-('Makowiec'),
-('Blini'),
-('Tortilla Española');
+INSERT INTO Recipe (name, userId) VALUES
+('Paella', 1),
+('Lasagne', 1),
+('Fish and Chips', 1),
+('Moussaka', 1),
+('Wiener Schnitzel', 1),
+('Ratatouille', 1),
+('Gulaschsuppe', 1),
+('Borschtsch',1),
+('Couscous',1),
+('Tzatziki',1),
+('Pierogi',1),
+('Haggis',1),
+('Köttbullar',1),
+('Tiramisu',1),
+('Sauerbraten',1),
+('Bouillabaisse',1),
+('Moules-frites',1),
+('Coq au Vin',1),
+('Goulash',2),
+("Shepherd's Pie",2),
+('Carbonara',2),
+('Sarma',2),
+('Baklava',2),
+('Rösti',2),
+('Kebab',2),
+('Sarma',2),
+('Tarte Tatin',2),
+('Plov',2),
+('Irish Stew',2),
+('Ceviche',2),
+('Linsensuppe',2),
+('Cordon Bleu',2),
+('Raclette',2),
+('Pilaf',2),
+('Gazpacho',2),
+('Baba Ganoush',2),
+('Maultaschen',2),
+('Bruschetta',2),
+('Spanakopita',2),
+('Wassail',2),
+('Himmel und Erde',2),
+('Paprikash',2),
+('Colcannon',2),
+('Karelian Pasties',2),
+('Pisto',2),
+('Kedgeree',2),
+('Makowiec',2),
+('Blini',2),
+('Tortilla Española',2);
 
 INSERT INTO UnitOfMeasurement (name) VALUES
 ('kg'),
