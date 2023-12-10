@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using RecipeAPI.Authentication;
@@ -6,11 +8,15 @@ using RecipeAPI.Database;
 using RecipeAPI.Exceptions;
 using System.Text.Json.Serialization;
 
+
+DBUserHandler userHandler = new DBUserHandler();
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
 
-builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddDbContext<AppDbContext>(
+	opt => opt.UseMySql(userHandler.dbConnectionString, ServerVersion.AutoDetect(userHandler.dbConnectionString)));
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -86,4 +92,4 @@ app.MapDefaultControllerRoute();
 
 app.MapFallbackToFile("/index.html");
 
-app.Run();
+
