@@ -92,4 +92,4 @@ app.MapDefaultControllerRoute();
 
 app.MapFallbackToFile("/index.html");
 
-
+app.Run();
