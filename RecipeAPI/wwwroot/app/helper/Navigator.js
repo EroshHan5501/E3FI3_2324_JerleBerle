@@ -49,7 +49,6 @@ export class Navigator {
                 break;
         }
 
-        console.log(path);
         window.history.pushState(null, null, path);
 
         const main = document.querySelector("main");

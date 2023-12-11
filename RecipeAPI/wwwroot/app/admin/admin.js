@@ -21,22 +21,7 @@ export class AdminPage extends MainPage {
             loadBtn: this.querySelector(".load-button")
         }
 
-        const url = AppConfig.buildApiPath(
-            `admin/User/?pageIndex=1&pageSize=${AdminPage.#entityNumber}`);
-
-        await this.getDataAsync(
-            url,
-            {
-                400: (statusCode, data) => console.log(data),
-                404: (statusCode, data) => console.log("Could not found!")
-            },
-            this.#initTableAsync.bind(this));
-
-        // register event handler for the 
-        const delBtns = this.querySelectorAll(".del-btn");
-        delBtns.forEach(btn => this.handleClick(
-            btn,
-            this.#handleDeleteAsync.bind(this)));
+        await this.#requestDataAsync(1, AdminPage.#entityNumber);
 
         this.handleClick(
             this.guiContent.loadBtn,
@@ -46,15 +31,7 @@ export class AdminPage extends MainPage {
     async #handleLoadMoreAsync(event) {
         event.preventDefault();
         this.#currentIndex += 1;
-        const url = AppConfig.buildApiPath(
-            `admin/User/?pageIndex=${this.#currentIndex}&pageSize=${AdminPage.#entityNumber}`);
-
-        await this.getDataAsync(
-            url,
-            {
-                400: (statusCode, data) => console.log(data)
-            },
-            this.#initTableAsync.bind(this));
+        await this.#requestDataAsync(this.#currentIndex, AdminPage.#entityNumber);
     }
 
     async #handleDeleteAsync(event) {
@@ -64,12 +41,32 @@ export class AdminPage extends MainPage {
 
         await this.deleteDataAsync(
             url,
-            { 400: (status, data) => console.log(data) },
-            this.initAsync.bind(this));
+            {
+                400: (status, data) => console.log(data)
+            },
+            () => console.log("delete was successfull"));
+
+        this.guiContent.tableBody.innerText = "";
+
+        // load all entities inclusive the current page 
+        const pageSize = AdminPage.#entityNumber * this.#currentIndex;
+        await this.#requestDataAsync(1, pageSize);
+    }
+
+    async #requestDataAsync(currentIndex, pageSize) {
+        const url = AppConfig.buildApiPath(
+            `admin/User/?pageIndex=${currentIndex}&pageSize=${pageSize}`);
+
+        await this.getDataAsync(
+            url,
+            {
+                400: (statusCode, data) => console.log(data),
+                404: (statusCode, data) => console.log("Could not found!")
+            },
+            this.#initTableAsync.bind(this));
     }
 
     async #initTableAsync(json) {
-
         const template = await this.getTemplateContentAsync(
             "/app/admin/snippets/row.html");
 
@@ -86,6 +83,10 @@ export class AdminPage extends MainPage {
             email.innerText = user.email;
             role.innerText = user.role;
             delBtn.setAttribute("data", user.email);
+
+            this.handleClick(
+                delBtn,
+                this.#handleDeleteAsync.bind(this));
 
             this.guiContent.tableBody.appendChild(tmp);
         }

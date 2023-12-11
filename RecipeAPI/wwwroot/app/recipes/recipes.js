@@ -31,7 +31,6 @@ export class RecipesPage extends MainPage {
     }
 
     async #handleSuccess(data) {
-        console.log(data);
         // for (const elem in )
     }
 }
