@@ -48,7 +48,6 @@ export class AdminPage extends MainPage {
 
         this.guiContent.tableBody.innerText = "";
 
-        // load all entities inclusive the current page 
         const pageSize = AdminPage.#entityNumber * this.#currentIndex;
         await this.#requestDataAsync(1, pageSize);
     }
