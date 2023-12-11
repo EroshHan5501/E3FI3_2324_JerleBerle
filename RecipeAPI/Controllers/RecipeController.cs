@@ -1,24 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+
 using RecipeAPI.Database;
 
-namespace RecipeAPI.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RecipeController : ControllerBase
-    {
-        private readonly AppDbContext _context;
-        public RecipeController(AppDbContext context)
-        {
-            _context = context;
-        }
+namespace RecipeAPI.Controllers;
 
-        [HttpGet]
-        public IEnumerable<RecipeModel> GetRecipes()
-        {
-            return  _context.Recipes.ToList();
-        }
+public class RecipeController : BaseController
+{
+    public RecipeController(AppDbContext context) : base(context)
+    {
+    }
+
+    [HttpGet]
+    public IEnumerable<RecipeModel> GetRecipes()
+    {
+        return DbContext.Recipes.ToList();
     }
 }

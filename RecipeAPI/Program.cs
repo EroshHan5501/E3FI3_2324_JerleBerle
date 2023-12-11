@@ -1,29 +1,95 @@
+using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using RecipeAPI.Authentication;
+using RecipeAPI.Authentication.Middleware;
 using RecipeAPI.Database;
+using RecipeAPI.Exceptions;
 using System.Text.Json.Serialization;
 
-var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+DBUserHandler userHandler = new DBUserHandler();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler=ReferenceHandler.Preserve);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AppDbContext>();
+builder.Services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
 
-var app = builder.Build();
+builder.Services.AddDbContext<AppDbContext>(
+	opt => opt.UseMySql(userHandler.dbConnectionString, ServerVersion.AutoDetect(userHandler.dbConnectionString)));
 
-// Configure the HTTP request pipeline.
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
+builder.Services.AddAuthentication(options =>
+{
+    options.RequireAuthenticatedSignIn = false;
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+.AddCookie(options =>
+{
+    string domain = "localhost";
+
+    if (builder.Environment.IsProduction())
+    {
+        domain = "recipe-app.com";
+    }
+
+    options.ClaimsIssuer = "RecipeApp";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.Cookie = new CookieBuilder()
+    {
+        Name = "sid",
+        HttpOnly = true,
+        IsEssential = true,
+        SameSite = SameSiteMode.Strict,
+        Domain = domain
+    };
+
+    options.EventsType = typeof(RecipeAuthenticationEvents);
+});
+
+builder.Services.AddCors(corsOptions =>
+{
+    corsOptions.AddPolicy("recipePolicy", config =>
+    {
+        config.AllowAnyOrigin();
+    });
+});
+
+builder.Services.AddScoped<RecipeAuthenticationEvents>();
+builder.Services.AddLogging();
+
+WebApplication app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseHttpLogging();
 }
 
-app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddlware>();
+
+app.UseCookiePolicy(new CookiePolicyOptions()
+{
+    HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+    Secure = CookieSecurePolicy.Always,
+    MinimumSameSitePolicy = SameSiteMode.Strict
+});
+
+app.UseCors("recipePolicy");
+
+app.UseStaticFiles();
+app.UseDefaultFiles();
+
+app.UseMiddleware<LoginMiddleware>();
+app.UseMiddleware<LogoutMiddleware>();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
+app.MapDefaultControllerRoute();
 
-app.MapControllers();
+app.MapFallbackToFile("/index.html");
 
 app.Run();

@@ -3,6 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+<<<<<<< HEAD
+        xmlns:view="clr-namespace:RecipeClient.View" 
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid x:Name="RootGrid">
+        
+=======
         xmlns:local="clr-namespace:RecipeClient"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -31,6 +38,7 @@
         <Image x:Name="imgTime" HorizontalAlignment="Left" Height="50" Width="50" Margin="180,370,0,0" VerticalAlignment="Top"  Source="\static\Icon_Time.png"/>
         <Label x:Name="lblTime" Content="Time" Margin="230,370,0,15" Foreground="White" HorizontalAlignment="Left" FontFamily="Arial" FontSize="25" Width="100" VerticalAlignment="Center"/>
 
+>>>>>>> b49452a4d07c8504a6572a3a9dde58cb9c836e4e
     </Grid>
     
 </Window>

@@ -1,3 +1,13 @@
+**\bin
+**\obj
+
+**\.vs
+**\.vscode
+
+**/TestResults
+
+**/secrets.*
+
 **/bin
 **/obj
 
