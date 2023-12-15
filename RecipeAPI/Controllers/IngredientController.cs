@@ -41,4 +41,12 @@ public class IngredientController : BaseController
 	var liste = DbContext.RiuRels.Where(x => x.IngredientId == id).ToList();
 	return liste;
     }
+
+    [HttpPost]
+    public async Task<ActionResult<RecipeModel>> PostIngredient(IngredientModel ingredient)
+    {
+	   DbContext.Ingredients.Add(ingredient);
+	   await DbContext.SaveChangesAsync();
+	   return Ok(ingredient);
+    }
 }
