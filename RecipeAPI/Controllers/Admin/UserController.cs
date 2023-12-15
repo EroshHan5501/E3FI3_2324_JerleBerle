@@ -10,7 +10,6 @@ using RecipeAPI.Extensions;
 
 namespace RecipeAPI.Controllers.Admin;
 
-[Route("api/admin/[controller]")]
 public class UserController : AdminBaseController
 {
     public UserController(AppDbContext dbContext) : base(dbContext)
@@ -18,10 +17,10 @@ public class UserController : AdminBaseController
 
     }
 
-    public async Task<IActionResult> Get([FromQuery]UserParameter parameter)
+    public async Task<IActionResult> Get([FromQuery] UserParameter parameter)
     {
         IQueryable<UserModel> query = DbContext.Users
-            .Where(x => x.Username.Contains(parameter.Username));
+            .Where(x => parameter.Username != null ? x.Username.Contains(parameter!.Username) : true);
 
         PagedEntityResponse<UserResponseObject> results = await query
             .Select(user => new UserResponseObject(user, false))
@@ -55,8 +54,27 @@ public class UserController : AdminBaseController
         return Ok();
     }
 
+    [HttpPost("update-role")]
+    public async Task<IActionResult> UpdateRole([FromBody] UpdateRole data)
+    {
+        UserModel? user = DbContext.Users
+            .FirstOrDefault(x => x.Email == data.Email);
+
+        if (user is null)
+        {
+            throw HttpException.NotFound(
+                $"User with email {data.Email} does not exists!");
+        }
+
+        user.Role = data.Role;
+
+        await DbContext.SaveChangesAsync(); 
+
+        return Ok();
+    }
+
     [HttpPost("update-password")]
-    public async Task<IActionResult> Update(UpdatePassword update)
+    public async Task<IActionResult> UpdatePassword([FromBody] UpdatePassword update)
     {
         // Just update the password and notify the user via email 
 
@@ -67,7 +85,7 @@ public class UserController : AdminBaseController
     }
 
     [HttpDelete("delete")]
-    public async Task<IActionResult> DeleteUserBy(UserDelete delete)
+    public async Task<IActionResult> DeleteUserBy([FromQuery]UserDelete delete)
     {
         UserModel? user = DbContext.Users
             .FirstOrDefault(user => user.Email == delete.Email);

@@ -42,6 +42,10 @@ nav ul li:active {
     color: black;
 }
 
+.invisible {
+    display: none;
+}
+
 .blocker-50px {
     position: relative;
     margin-top: 25px;
@@ -54,4 +58,10 @@ nav ul li:active {
     height: 90%;
     padding: 10px;
     left: 15%;
+}
+
+admin-page {
+    display: block;
+    width: 100vw;
+    height: 100vh;
 }

@@ -1,0 +1,23 @@
+.subpage {
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(38, 38, 38, 0.4);
+}
+
+.subpage-container {
+    position: relative;
+    width: 40%;
+    height: 50%;
+    top: 25%;
+    left: 30%;
+    padding: 10px;
+    background-color: rgba(38, 38, 38);
+    border-radius: 20px;
+    color: white;
+}
+
+h2 {
+    text-align: center;
+}
