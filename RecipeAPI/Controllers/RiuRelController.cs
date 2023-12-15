@@ -18,10 +18,10 @@ public class RiuRelController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<UnitOfMeasurementModel>> PostUnitOfMeasurement(UnitOfMeasurementModel unitOfMeasurement)
+    public async Task<ActionResult<RiuRelModel>> PostRiuRel(RiuRelModel relation)
     {
-	   DbContext.UnitsOfMeasurement.Add(unitOfMeasurement);
+	   DbContext.RiuRels.Add(relation);
 	   await DbContext.SaveChangesAsync();
-	   return Ok(unitOfMeasurement);
+	   return Ok(relation);
     }
 }
