@@ -3,40 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-<<<<<<< HEAD
-        xmlns:view="clr-namespace:RecipeClient.View" 
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid x:Name="RootGrid">
-        
-=======
         xmlns:local="clr-namespace:RecipeClient"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="Black">
-        <Label x:Name="lblHeader" Content="RecipeApp" Margin="5,0,0,375" Foreground="White" HorizontalAlignment="Left" FontFamily="Arial" FontSize="40" FontWeight="Bold" Width="230"/>
+        <Label x:Name="lblHeader" Content="RecipeApp" Margin="10,0,0,375" Foreground="White" HorizontalAlignment="Left" FontFamily="Arial" FontSize="40" FontWeight="Bold" Width="230"/>
+        <Image x:Name="imgEdit" HorizontalAlignment="Left" Height="40" Width="40" Margin="753,7,7,0" VerticalAlignment="Top" Source="\static\Icon_Edit.png"/>
         <Rectangle x:Name="line" HorizontalAlignment="Center" Height="2" Margin="0,54,0,0" Stroke="White" VerticalAlignment="Top" Width="800" RenderTransformOrigin="0.5,0.5"/>
-        <Label x:Name="lblRecipeName" Content="Name" Margin="15,55,470,334" Foreground="White" HorizontalAlignment="Left" FontFamily="Arial" FontSize="30" FontWeight="Bold" Width="315"/>
+        <Label x:Name="lblRecipeName" Content="Name" Margin="10,55,470,334" Foreground="White" HorizontalAlignment="Left" FontFamily="Arial" FontSize="30" FontWeight="Bold" Width="315"/>
+       
+        <Button x:Name="btnEdit" Height="40" Width="40" Margin="753,7,7,0" VerticalAlignment="Top" BorderBrush="White">
+            <Button.Background>
+                <ImageBrush ImageSource="/Icon_Edit.png"/>
+            </Button.Background>
+        </Button>
 
-        <ListView x:Name="lvIngredients" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="15,105,470,80" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
-            <ListView.View>
-                <GridView AllowsColumnReorder="false" ColumnHeaderToolTip="Employee Information">
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Ingredient}" Header="Ingredient" Width="150"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="Amount"  Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Measure}" Header="Measure" Width="50"/>
-                </GridView>
-            </ListView.View>
+        <ListView x:Name="lvIngredients" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,105,470,80" Foreground="White" BorderBrush="{x:Null}" Background="#FF1C1C1C">
+           
         </ListView>
 
-        <Label x:Name="lblRecipe" Content="Recipe" Margin="345,70,0,15" Foreground="White" HorizontalAlignment="Left" FontFamily="Arial" FontSize="20" Width="445"/>
+        <Label x:Name="lblRecipe" Content="Recipe" Margin="345,70,0,25" Foreground="White" HorizontalAlignment="Left" FontSize="20" Width="435"/>
 
-        <Image x:Name="imgLevel1" HorizontalAlignment="Left" Height="50" Width="50" Margin="15,370,0,0" VerticalAlignment="Top"  Source="C:\Users\LSCHAE1\OneDrive - Daimler Truck\Desktop/Level_Icon1.png"/>
-        <Image x:Name="imgLevel2" HorizontalAlignment="Left" Height="50" Width="50" Margin="65,370,0,0" VerticalAlignment="Top"  Source="C:\Users\LSCHAE1\OneDrive - Daimler Truck\Desktop/Level_Icon1.png"/>
-        <Image x:Name="imgLevel3" HorizontalAlignment="Left" Height="50" Width="50" Margin="115,370,0,0" VerticalAlignment="Top"  Source="C:\Users\LSCHAE1\OneDrive - Daimler Truck\Desktop/Level_Icon1.png"/>
+        <Image x:Name="imgLevel1" HorizontalAlignment="Left" Height="50" Width="50" Margin="15,370,0,0" VerticalAlignment="Top" Source="\static\Icon_Level.png"/>
+        <Image x:Name="imgLevel2" HorizontalAlignment="Left" Height="50" Width="50" Margin="65,370,0,0" VerticalAlignment="Top" Source="\static\Icon_Level.png"/>
+        <Image x:Name="imgLevel3" HorizontalAlignment="Left" Height="50" Width="50" Margin="115,370,0,0" VerticalAlignment="Top" Source="\static\Icon_Level.png"/>
 
-        <Image x:Name="imgTime" HorizontalAlignment="Left" Height="50" Width="50" Margin="180,370,0,0" VerticalAlignment="Top"  Source="C:\Users\LSCHAE1\OneDrive - Daimler Truck\Desktop/Time_Icon.png"/>
-        <Label x:Name="lblTime" Content="Time" Margin="230,370,0,15" Foreground="White" HorizontalAlignment="Left" FontFamily="Arial" FontSize="25" Width="100" VerticalAlignment="Center"/>
+        <Image x:Name="imgTime" HorizontalAlignment="Left" Height="50" Width="50" Margin="180,370,0,0" VerticalAlignment="Top" Source="\static\Icon_Time.png"/>
+        <Label x:Name="lblTime" Content="Time" Margin="230,370,0,15" Foreground="White" HorizontalAlignment="Left" FontSize="25" Width="100" VerticalAlignment="Center"/>
 
->>>>>>> b49452a4d07c8504a6572a3a9dde58cb9c836e4e
     </Grid>
+    
 </Window>
