@@ -16,4 +16,29 @@ public class IngredientController : BaseController
     {
         return DbContext.Ingredients.ToList();
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IngredientModel>> GetIngredients(int id)
+    {
+            if (DbContext.Ingredients == null)
+            {
+        	    return NotFound();
+            }
+
+            var ingredient = await DbContext.Ingredients.FindAsync(id);
+
+            if (ingredient == null)
+            {
+        	    return NotFound();
+            }
+
+            return ingredient;
+    }
+
+    [HttpGet("rels/{id}")]
+    public async Task<ActionResult<IEnumerable<RiuRelModel>>> GetRels(int id)
+    {
+	var liste = DbContext.RiuRels.Where(x => x.IngredientId == id).ToList();
+	return liste;
+    }
 }
