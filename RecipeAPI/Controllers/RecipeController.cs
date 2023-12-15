@@ -41,4 +41,14 @@ public class RecipeController : BaseController
         var liste = DbContext.RiuRels.Where(x => x.RecipeId == id).ToList();
         return liste;
     }
+
+    [HttpPost]
+    public async Task<ActionResult<RecipeModel>> PostRecipe(DTO dto)
+    {
+	   RecipeModel newRecipeModel = new() { Name = dto.Name, UserId = this.CurrentUser.Id };
+	   DbContext.Recipes.Add(newRecipeModel);
+	   await DbContext.SaveChangesAsync();
+	   //return CreatedAtAction("GetRecipes", new { id = newRecipeModel.Id }, newRecipeModel );
+	   return Ok(newRecipeModel);
+    }
 }
