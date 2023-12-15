@@ -155,7 +155,7 @@ namespace RecipeAPI.Database
             if (!File.Exists("./secrets.json"))
             {
                 Console.WriteLine("Creating secrets..");
-                File.Create("./secrets.json");
+                File.Create("./secrets.json").Dispose();
 
                 DBUser user = DBUser.BuildUser();
                 user.HandleUserState();
