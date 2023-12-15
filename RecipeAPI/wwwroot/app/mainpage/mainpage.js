@@ -12,7 +12,7 @@ export class MainPage extends BasePage {
 
     async initAsync() {
         // INFO: Call this method first in all derived classes before doing anything
-        await this.appendTemplate("/app/mainpage/mainpage.html", this);
+        await this.appendTemplate("app/mainpage/mainpage.html", this);
 
         if (this.currentUser === null) {
 

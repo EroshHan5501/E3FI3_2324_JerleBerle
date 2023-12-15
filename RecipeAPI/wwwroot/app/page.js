@@ -10,13 +10,6 @@ import { AppConfig } from "/app/helper/AppConfig.js";
 import { Navigator } from "/app/helper/Navigator.js";
 import { RouteNames } from "/app/helper/RouteNames.js";
 
-/*
- pageConfig 
-    - title 
-    - heading 
-
-*/
-
 export class BasePage extends HTMLElement {
     #pageConfig = null;
     #initCallback = null;
@@ -27,18 +20,22 @@ export class BasePage extends HTMLElement {
     }
 
     async appendTemplate(path, node) {
-        const html = await this.#loadTemplate(path);
+        const content = await this.getTemplateContentAsync(path);
+        node.appendChild(content);
+    }
+
+    async getTemplateContentAsync(path) {
+        const html = await this.#loadTemplateAsync(path);
         const template = html.querySelector("template");
         if (template === undefined) {
             throw new Error("Could not found template tag!");
         }
         const content = template.content.cloneNode(true);
-        node.appendChild(content);
+        return content;
     }
 
-    async #loadTemplate(path) {
+    async #loadTemplateAsync(path) {
         const url = AppConfig.buildPath(path);
-        console.log(url);
         const response = await fetch(url);
         const html = await response.text();
         const parser = new DOMParser();
@@ -54,7 +51,7 @@ export class BasePage extends HTMLElement {
     }
 
     async deleteDataAsync(url, errorCallbacks, successCallback) {
-        return this.#makeRequest(url, 'DELETE', errorCallbacks, successCallback);
+        return this.#makeRequest(url, 'DELETE', null, errorCallbacks, successCallback);
     }
 
     async #makeRequest(url, method, payload, errorCallbacks, successCallback) {
@@ -115,5 +112,9 @@ export class BasePage extends HTMLElement {
 
     handleClick(element, callback) {
         element.addEventListener("click", callback);
+    }
+
+    handleChange(element, callback) {
+        element.addEventListener("change", callback);
     }
 }
