@@ -43,7 +43,7 @@ public class IngredientController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<RecipeModel>> PostIngredient(IngredientModel ingredient)
+    public async Task<ActionResult<IngredientModel>> PostIngredient(IngredientModel ingredient)
     {
 	   DbContext.Ingredients.Add(ingredient);
 	   await DbContext.SaveChangesAsync();
