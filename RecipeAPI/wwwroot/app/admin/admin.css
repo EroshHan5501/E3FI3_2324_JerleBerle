@@ -10,14 +10,41 @@
     color: white;
 }
 
+.administrator-page {
+    position: relative;
+    width: 80%;
+    overflow: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 0px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: red;
+    border-radius: 10px;
+}
+
 table {
     table-layout: fixed;
     border-collapse: collapse;
     border-bottom: 1px solid white;
     width: 90%;
+    height: 90%;
 }
 
 tr {
     height: 20px;
     border-bottom: 2px solid white;
+}
+
+tr:hover {
+    cursor: pointer;
 }

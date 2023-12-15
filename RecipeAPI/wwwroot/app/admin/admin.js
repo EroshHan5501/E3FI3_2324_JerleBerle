@@ -1,5 +1,6 @@
 import { AppConfig } from "../helper/AppConfig.js";
 import { MainPage } from "../mainpage/mainpage.js";
+import { ChangeRolePage } from "../subpages/admin/changeRolePage.js";
 
 export class AdminPage extends MainPage {
     static #entityNumber = 2;
@@ -10,6 +11,8 @@ export class AdminPage extends MainPage {
     }
 
     async initAsync() {
+        this.innerText = "";
+
         await super.initAsync();
 
         await this.appendTemplate(
@@ -65,17 +68,43 @@ export class AdminPage extends MainPage {
             this.#initTableAsync.bind(this));
     }
 
+    async #handleEditClick(event) {
+        event.preventDefault();
+
+        if (event.target.target == typeof (HTMLButtonElement)) {
+            return;
+        }
+
+        const parent = event.target.parentElement;
+
+        const user = {
+            username: parent.getAttribute("username"),
+            role: parent.getAttribute("role"),
+            email: parent.getAttribute("email")
+        };
+
+        const changeRolePage = new ChangeRolePage(user, async () => await this.initAsync());
+        document.body.appendChild(changeRolePage);
+
+
+    }
+
     async #initTableAsync(json) {
         const template = await this.getTemplateContentAsync(
             "/app/admin/snippets/row.html");
 
         for (const user of json.content) {
             const tmp = template.cloneNode(true);
-            const id = tmp.querySelector(".id-cell"),
+            const tr = tmp.querySelector("tr"),
+                id = tmp.querySelector(".id-cell"),
                 username = tmp.querySelector(".username-cell"),
                 email = tmp.querySelector(".email-cell"),
                 role = tmp.querySelector(".role-cell"),
                 delBtn = tmp.querySelector(".del-btn");
+
+            tr.setAttribute("username", user.username);
+            tr.setAttribute("role", user.role);
+            tr.setAttribute("email", user.email);
 
             id.innerText = user.id;
             username.innerText = user.username;
@@ -87,9 +116,12 @@ export class AdminPage extends MainPage {
                 delBtn,
                 this.#handleDeleteAsync.bind(this));
 
+            this.handleClick(
+                tr,
+                this.#handleEditClick.bind(this));
+
             this.guiContent.tableBody.appendChild(tmp);
         }
-
     }
 }
 

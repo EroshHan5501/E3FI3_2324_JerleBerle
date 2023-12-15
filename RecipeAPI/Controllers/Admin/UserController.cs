@@ -68,6 +68,8 @@ public class UserController : AdminBaseController
 
         user.Role = data.Role;
 
+        await DbContext.SaveChangesAsync(); 
+
         return Ok();
     }
 

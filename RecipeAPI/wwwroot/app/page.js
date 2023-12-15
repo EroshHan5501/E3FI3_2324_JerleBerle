@@ -10,13 +10,6 @@ import { AppConfig } from "/app/helper/AppConfig.js";
 import { Navigator } from "/app/helper/Navigator.js";
 import { RouteNames } from "/app/helper/RouteNames.js";
 
-/*
- pageConfig 
-    - title 
-    - heading 
-
-*/
-
 export class BasePage extends HTMLElement {
     #pageConfig = null;
     #initCallback = null;
@@ -119,5 +112,9 @@ export class BasePage extends HTMLElement {
 
     handleClick(element, callback) {
         element.addEventListener("click", callback);
+    }
+
+    handleChange(element, callback) {
+        element.addEventListener("change", callback);
     }
 }
