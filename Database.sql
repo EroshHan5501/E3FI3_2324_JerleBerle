@@ -313,4 +313,7 @@ INSERT INTO UnitOfMeasurement (name) VALUES
 
 INSERT INTO RiuRel (RecipeID, IngredientId, Quantity, UnitOfMeasurementId) VALUES
 (1,5, 200, 2),
+(2,5, 200, 2),
+(2,5, 200, 2),
+(2,5, 200, 2),
 (1,6, 300, 5);
