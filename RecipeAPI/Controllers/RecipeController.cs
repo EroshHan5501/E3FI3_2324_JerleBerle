@@ -41,4 +41,24 @@ public class RecipeController : BaseController
         var liste = DbContext.RiuRels.Where(x => x.RecipeId == id).ToList();
         return liste;
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteRecipe(int id)
+    {
+	    if(DbContext.Recipes == null)
+	    {
+		    return NotFound();
+	    }
+	    
+	    var recipe = await DbContext.Recipes.FindAsync(id);
+	    if(recipe == null)
+	    {
+		    return NotFound();
+	    }
+
+	    DbContext.Recipes.Remove(recipe);
+	    await DbContext.SaveChangesAsync();
+
+	    return NoContent();
+    }
 }
