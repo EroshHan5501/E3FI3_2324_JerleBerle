@@ -42,6 +42,16 @@ public class RecipeController : BaseController
         return liste;
     }
 
+    [HttpPost]
+    public async Task<ActionResult<RecipeModel>> PostRecipe(DTO dto)
+    {
+	   RecipeModel newRecipeModel = new() { Name = dto.Name, UserId = this.CurrentUser.Id };
+	   DbContext.Recipes.Add(newRecipeModel);
+	   await DbContext.SaveChangesAsync();
+	   //return CreatedAtAction("GetRecipes", new { id = newRecipeModel.Id }, newRecipeModel );
+	   return Ok(newRecipeModel);
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult<string>> DeleteRecipe(int id)
     {
@@ -67,7 +77,7 @@ public class RecipeController : BaseController
 
 	    return Ok($"Successfully deleted Entry: {recipe.Name}");
     }
-
+    
     [HttpDelete("{id}/complete")]
     public async Task<ActionResult<string>> DeleteWithRelations(int id)
     {

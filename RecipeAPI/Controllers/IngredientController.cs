@@ -42,6 +42,14 @@ public class IngredientController : BaseController
 	return liste;
     }
 
+    [HttpPost]
+    public async Task<ActionResult<IngredientModel>> PostIngredient(IngredientModel ingredient)
+    {
+	   DbContext.Ingredients.Add(ingredient);
+	   await DbContext.SaveChangesAsync();
+	   return Ok(ingredient);
+    }
+    
     [HttpDelete("{id}")]
     public async Task<ActionResult<string>> DeleteIngredient(int id)
     {

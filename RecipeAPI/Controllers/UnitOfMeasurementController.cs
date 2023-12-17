@@ -42,6 +42,14 @@ public class UnitOfMeasurementController : BaseController
 	return liste;
     }
 
+    [HttpPost]
+    public async Task<ActionResult<UnitOfMeasurementModel>> PostUnitOfMeasurement(UnitOfMeasurementModel unitOfMeasurement)
+    {
+	   DbContext.UnitsOfMeasurement.Add(unitOfMeasurement);
+	   await DbContext.SaveChangesAsync();
+	   return Ok(unitOfMeasurement);
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult<string>> DeleteUnitOfMeasurement(int id)
     {

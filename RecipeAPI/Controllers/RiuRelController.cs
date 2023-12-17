@@ -17,6 +17,14 @@ public class RiuRelController : BaseController
         return DbContext.RiuRels.ToList();
     }
 
+    [HttpPost]
+    public async Task<ActionResult<RiuRelModel>> PostRiuRel(RiuRelModel relation)
+    {
+	   DbContext.RiuRels.Add(relation);
+	   await DbContext.SaveChangesAsync();
+	   return Ok(relation);
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult<RiuRelModel>> DeleteRiuRel(int id)
     {
