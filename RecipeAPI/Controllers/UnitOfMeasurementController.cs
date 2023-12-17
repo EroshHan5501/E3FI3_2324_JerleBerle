@@ -74,26 +74,19 @@ public class UnitOfMeasurementController : BaseController
     {
 	    if(DbContext.UnitsOfMeasurement == null)
 	    {
-		    return NotFound();
+		    return NotFound("Given Endpoint has no Entries.");
 	    }
 	    
 	    var unitOfMeasurement = await DbContext.UnitsOfMeasurement.FindAsync(id);
 	    if(unitOfMeasurement == null)
 	    {
-		    return NotFound();
+		    return NotFound("Endpoint has no Entry with the following Id: {id}.");
 	    }
 
 	    var liste = DbContext.RiuRels.Where(x => x.UnitOfMeasurementId == id).ToList();
-	    if(liste.Count() < 1)
+	    foreach(var relation in liste)
 	    {
-		    return NotFound();
-	    }
-	    else
-	    {
-		    foreach(var relation in liste)
-		    {
-			    DbContext.RiuRels.Remove(relation);
-		    }
+		    DbContext.RiuRels.Remove(relation);
 	    }
 
 	    DbContext.UnitsOfMeasurement.Remove(unitOfMeasurement);
