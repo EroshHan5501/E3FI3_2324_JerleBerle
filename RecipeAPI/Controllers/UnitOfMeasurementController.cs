@@ -41,4 +41,12 @@ public class UnitOfMeasurementController : BaseController
 	var liste = DbContext.RiuRels.Where(x => x.UnitOfMeasurementId == id).ToList();
 	return liste;
     }
+
+    [HttpPost]
+    public async Task<ActionResult<UnitOfMeasurementModel>> PostUnitOfMeasurement(UnitOfMeasurementModel unitOfMeasurement)
+    {
+	   DbContext.UnitsOfMeasurement.Add(unitOfMeasurement);
+	   await DbContext.SaveChangesAsync();
+	   return Ok(unitOfMeasurement);
+    }
 }

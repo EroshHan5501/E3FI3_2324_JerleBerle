@@ -17,24 +17,11 @@ public class RiuRelController : BaseController
         return DbContext.RiuRels.ToList();
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<IEnumerable<RiuRelModel>>> GetRels(int id)
-    // {
-    //     var liste = DbContext.RiuRels.Where(x => x.RecipeId == id).ToList();
-    //     return liste;
-    // }
-
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<IEnumerable<RiuRelModel>>> GetRels(int id)
-    // {
-    //     var liste = DbContext.RiuRels.Where(x => x.IngredientId == id).ToList();
-    //     return liste;
-    // }
-
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<IEnumerable<RiuRelModel>>> GetRels(int id)
-    // {
-    //     var liste = DbContext.RiuRels.Where(x => x.UnitOfMeasurementId == id).ToList();
-    //     return liste;
-    // }
+    [HttpPost]
+    public async Task<ActionResult<RiuRelModel>> PostRiuRel(RiuRelModel relation)
+    {
+	   DbContext.RiuRels.Add(relation);
+	   await DbContext.SaveChangesAsync();
+	   return Ok(relation);
+    }
 }
