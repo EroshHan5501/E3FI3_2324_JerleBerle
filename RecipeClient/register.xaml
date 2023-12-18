@@ -1,0 +1,19 @@
+﻿<Window x:Class="Recipe_Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ListViewBasicSample" Height="400" Width="800">
+    <Grid Background="Black">
+        <Label Content="RecipeApp" FontSize="28" Foreground="White" Margin="10,0,0,0"></Label>
+
+        <Rectangle Height="2" Stroke="white" Width="800" Margin="0,45,0,330"/>
+
+        <Rectangle Stroke="white" Margin="110,100,110,50"/>
+
+        <Label Content="Register" FontSize="22" Foreground="White" Margin="355,110,355,233"></Label>
+        <TextBox HorizontalAlignment="Left" Margin="204,156,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="402" Height="40" AutomationProperties.HelpText="Username" AutomationProperties.Name="Username-Field"/>
+        <TextBox HorizontalAlignment="Left" Margin="204,217,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="402" Height="40" AutomationProperties.HelpText="Username" AutomationProperties.Name="Username-Field"/>
+        <Button Content="Register" Margin="327,280,327,71"/>
+
+
+    </Grid>
+</Window>
