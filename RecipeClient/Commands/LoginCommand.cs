@@ -14,6 +14,8 @@ internal class LoginCommand : ICommand
 
     public LoginViewModel Model { get; set; }
 
+    public string ApiPath => "login/";
+
     public LoginCommand(LoginViewModel model)
     {
         Model = model;
@@ -32,14 +34,14 @@ internal class LoginCommand : ICommand
         {
             Content = JsonContent.Create<LoginViewModel>(Model),
             Method = HttpMethod.Post,
-            RequestUri = new Uri("https://localhost:8068/api/login/")
+            RequestUri = ConfigurationProvider.CreateApiPath(ApiPath)
         };
 
         HttpResponseMessage response = client.Send(request);
 
         if (response.IsSuccessStatusCode)
         {
-            IEnumerable<string> cookieValues = response.Headers.GetValues("cookies");
+            IEnumerable<string> cookieValues = response.Headers.GetValues("cookie");
 
             CookieStore.FromCookies(cookieValues);
         }

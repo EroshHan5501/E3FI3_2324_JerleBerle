@@ -13,7 +13,9 @@ internal class RegisterCommand : ICommand
 {
     public event EventHandler? CanExecuteChanged;
 
-    public RegisterViewModel Model { get; set; }    
+    public RegisterViewModel Model { get; set; }
+
+    public string ApiPath => "User/register/";
 
     public RegisterCommand(RegisterViewModel model)
     {
@@ -31,6 +33,7 @@ internal class RegisterCommand : ICommand
 
         HttpRequestMessage message = new HttpRequestMessage()
         {
+            RequestUri = ConfigurationProvider.CreateApiPath(ApiPath),
             Method = HttpMethod.Post,
             Content = JsonContent.Create<RegisterViewModel>(Model)
         };
@@ -39,7 +42,7 @@ internal class RegisterCommand : ICommand
 
         if (response.IsSuccessStatusCode)
         {
-            IEnumerable<string> cookies = response.Content.Headers.GetValues("cookies");
+            IEnumerable<string> cookies = response.Content.Headers.GetValues("cookie");
 
             CookieStore.FromCookies(cookies);
         }

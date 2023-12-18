@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RecipeClient.Persistence;
 
@@ -45,7 +44,7 @@ internal class CookieStore
         }
     }
 
-    public IEnumerable<string> Cookies { get; private set; }
+    public IEnumerable<string> Cookies { get; private set; } = null!;
 
     private void Initialize(IEnumerable<string> cookies)
     {
