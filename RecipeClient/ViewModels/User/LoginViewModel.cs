@@ -1,6 +1,7 @@
 ﻿using RecipeClient.Commands;
 using RecipeClient.ViewModels.Core;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace RecipeClient.ViewModels.User;

@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Windows;
 
-namespace RecipeClient
+namespace RecipeClient;
+
+internal class Program
 {
-    internal class Program
+    [STAThread]
+    public static void Main()
     {
-        [STAThread]
-        public static void Main(string[] args)
+        Application app = new Application();
+
+        MainWindow window = new MainWindow();
+
+        app.DispatcherUnhandledException += (sender, args) =>
         {
-            Application app = new Application();
+            MessageBox.Show(window, args.Exception.Message);
+        };
 
-            MainWindow window = new MainWindow();
-
-            app.DispatcherUnhandledException += (sender, args) =>
-            {
-                MessageBox.Show(window, args.Exception.Message);
-            };
-
-            app.Run(window);
-        }
+        app.Run(window);
     }
 }
