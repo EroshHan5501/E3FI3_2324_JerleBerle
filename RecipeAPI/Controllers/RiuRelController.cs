@@ -24,4 +24,24 @@ public class RiuRelController : BaseController
 	   await DbContext.SaveChangesAsync();
 	   return Ok(relation);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<RiuRelModel>> DeleteRiuRel(int id)
+    {
+	    if(DbContext.RiuRels == null)
+	    {
+		    return NotFound();
+	    }
+	    
+	    var relation = await DbContext.RiuRels.FindAsync(id);
+	    if(relation == null)
+	    {
+		    return NotFound();
+	    }
+
+	    DbContext.RiuRels.Remove(relation);
+	    await DbContext.SaveChangesAsync();
+
+	    return Ok(relation);
+    }
 }
