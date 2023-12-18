@@ -30,5 +30,5 @@ internal class LoginViewModel : ViewModelBase
         }
     }
 
-    public ICommand LoginCommand => new LoginCommand();
+    public ICommand LoginCommand => new LoginCommand(this);
 }

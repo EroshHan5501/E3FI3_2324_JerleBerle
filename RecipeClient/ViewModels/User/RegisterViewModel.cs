@@ -40,5 +40,5 @@ internal class RegisterViewModel : ViewModelBase
         }
     }
 
-    public ICommand RegisterCommand => new RegisterCommand();
+    public ICommand RegisterCommand => new RegisterCommand(this);
 }
