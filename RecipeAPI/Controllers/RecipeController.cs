@@ -2,6 +2,7 @@
 
 using RecipeAPI.Database;
 using RecipeAPI.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RecipeAPI.Controllers;
 
@@ -50,6 +51,35 @@ public class RecipeController : BaseController
 	   await DbContext.SaveChangesAsync();
 	   //return CreatedAtAction("GetRecipes", new { id = newRecipeModel.Id }, newRecipeModel );
 	   return Ok(newRecipeModel);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<string>> PutRecipe(int id, DTO dto)
+    {
+            var recipe = await DbContext.Recipes.FindAsync(id);
+	    if (recipe == null)
+	    {
+		    return BadRequest("No Entry for given Id.");
+	    }
+	    if(this.CurrentUser.Id != recipe.UserId && this.CurrentUser.Role != Role.Admin)
+	    {
+		    return Unauthorized("User not authorized.");
+	    }
+
+	    recipe.Name = dto.Name;
+	    var recipeEntity = DbContext.Entry(recipe);
+	    DbContext.Entry(recipe).State = EntityState.Modified;
+
+	    try
+	    {
+		    await DbContext.SaveChangesAsync();
+	    }
+	    catch (DbUpdateConcurrencyException)
+	    {
+		    throw;
+	    }
+
+	    return Ok();
     }
 
     [HttpDelete("{id}")]
