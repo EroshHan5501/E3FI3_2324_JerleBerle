@@ -59,7 +59,7 @@ public class RecipeController : BaseController
             var recipe = await DbContext.Recipes.FindAsync(id);
 	    if (recipe == null)
 	    {
-		    return BadRequest("No Recipe for given Id.");
+		    return BadRequest("No Entry for given Id.");
 	    }
 	    if(this.CurrentUser.Id != recipe.UserId && this.CurrentUser.Role != Role.Admin)
 	    {
