@@ -17,24 +17,31 @@ public class RiuRelController : BaseController
         return DbContext.RiuRels.ToList();
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<IEnumerable<RiuRelModel>>> GetRels(int id)
-    // {
-    //     var liste = DbContext.RiuRels.Where(x => x.RecipeId == id).ToList();
-    //     return liste;
-    // }
+    [HttpPost]
+    public async Task<ActionResult<RiuRelModel>> PostRiuRel(RiuRelModel relation)
+    {
+	   DbContext.RiuRels.Add(relation);
+	   await DbContext.SaveChangesAsync();
+	   return Ok(relation);
+    }
 
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<IEnumerable<RiuRelModel>>> GetRels(int id)
-    // {
-    //     var liste = DbContext.RiuRels.Where(x => x.IngredientId == id).ToList();
-    //     return liste;
-    // }
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<RiuRelModel>> DeleteRiuRel(int id)
+    {
+	    if(DbContext.RiuRels == null)
+	    {
+		    return NotFound();
+	    }
+	    
+	    var relation = await DbContext.RiuRels.FindAsync(id);
+	    if(relation == null)
+	    {
+		    return NotFound();
+	    }
 
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<IEnumerable<RiuRelModel>>> GetRels(int id)
-    // {
-    //     var liste = DbContext.RiuRels.Where(x => x.UnitOfMeasurementId == id).ToList();
-    //     return liste;
-    // }
+	    DbContext.RiuRels.Remove(relation);
+	    await DbContext.SaveChangesAsync();
+
+	    return Ok(relation);
+    }
 }

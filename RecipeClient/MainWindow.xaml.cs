@@ -34,24 +34,17 @@ public partial class MainWindow : Window
 {
     public MainWindow()
     {
-        InitializeComponent();
-    }
-
-    public async Task StartupRouting()
-    {
-        HttpClient client = new HttpClient();
-
-        HttpResponseMessage result = await client.GetAsync("https://localhost:6085/api/Recipe/");
-
-        IEnumerable<string> rest = new[] { "hello", "world" };
-
-        if (result.StatusCode == HttpStatusCode.Unauthorized)
+        public MainWindow()
         {
-            // TODO: Route to login view 
+            InitializeComponent();
+            SwitchToView("register.xaml");
         }
-        else
-        {
-            this.Content = new RecipeListView();
+
+         private void SwitchToView(string viewFileName)
+         {
+            var viewUri = new Uri(viewFileName, UriKind.Relative);
+            var view = (UserControl)LoadComponent(viewUri);
+            contentControl.Content = view;
         }
     }
 }
