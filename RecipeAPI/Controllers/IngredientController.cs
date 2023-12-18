@@ -2,6 +2,7 @@
 
 using RecipeAPI.Database;
 using RecipeAPI.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RecipeAPI.Controllers;
 
@@ -48,5 +49,30 @@ public class IngredientController : BaseController
 	   DbContext.Ingredients.Add(ingredient);
 	   await DbContext.SaveChangesAsync();
 	   return Ok(ingredient);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<string>> PutIngredient(int id, DTO dto)
+    {
+            var ingredient = await DbContext.Ingredients.FindAsync(id);
+	    if (ingredient == null)
+	    {
+		    return BadRequest("No Entry for given Id.");
+	    }
+
+	    ingredient.Name = dto.Name;
+	    var ingredientEntity = DbContext.Entry(ingredient);
+	    DbContext.Entry(ingredient).State = EntityState.Modified;
+
+	    try
+	    {
+		    await DbContext.SaveChangesAsync();
+	    }
+	    catch (DbUpdateConcurrencyException)
+	    {
+		    throw;
+	    }
+
+	    return Ok();
     }
 }
