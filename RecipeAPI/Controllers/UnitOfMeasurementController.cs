@@ -93,7 +93,6 @@ public class UnitOfMeasurementController : BaseController
 	    var liste = DbContext.RiuRels.Where(x => x.UnitOfMeasurementId == id).ToList();
 	    if(liste.Count() > 0)
 	    {
-		    //return Ok("referencccci distubred niggah");
 		    return BadRequest("Deleting this Entry would violate the referential Integrity of a Relation.\nPlease consider doing a complete Delete by attaching /complete to the URI.");
 	    }
 
