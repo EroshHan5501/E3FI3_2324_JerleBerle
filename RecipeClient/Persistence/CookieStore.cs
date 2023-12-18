@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RecipeClient.Persistence;
 
@@ -20,7 +21,7 @@ internal class CookieStore
 
             if (!isInitalized)
             {
-                throw new ArgumentNullException("Must be initialized from cookies!");
+                throw new ArgumentNullException("Must be initialized with cookies!");
             }
 
             _store = new CookieStore();
@@ -28,7 +29,23 @@ internal class CookieStore
         }
     }
 
-    public IEnumerable<string>? Cookies { get; private set; }
+    public bool IsAuthenticated
+    {
+        get
+        {
+            try
+            {
+                string sessionId = GetSessionId();
+                return !string.IsNullOrWhiteSpace(sessionId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+    }
+
+    public IEnumerable<string> Cookies { get; private set; }
 
     private void Initialize(IEnumerable<string> cookies)
     {
@@ -41,4 +58,17 @@ internal class CookieStore
         isInitalized = true;
         return Store;
     } 
+
+    private string GetSessionId()
+    {
+        foreach(string value in Cookies)
+        {
+            if (value.StartsWith("sid"))
+            {
+                return value.Substring("sid=".Length);
+            }
+        }
+
+        throw new Exception("Session id is not present!");
+    }
 }
