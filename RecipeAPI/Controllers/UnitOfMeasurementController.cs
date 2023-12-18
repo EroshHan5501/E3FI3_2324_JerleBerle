@@ -2,6 +2,7 @@
 
 using RecipeAPI.Database;
 using RecipeAPI.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RecipeAPI.Controllers;
 
@@ -48,5 +49,30 @@ public class UnitOfMeasurementController : BaseController
 	   DbContext.UnitsOfMeasurement.Add(unitOfMeasurement);
 	   await DbContext.SaveChangesAsync();
 	   return Ok(unitOfMeasurement);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<string>> PutUnitOfMeasurement(int id, DTO dto)
+    {
+            var unitOfMeasurement = await DbContext.UnitsOfMeasurement.FindAsync(id);
+	    if (unitOfMeasurement == null)
+	    {
+		    return BadRequest("No Entry for given Id.");
+	    }
+
+	    unitOfMeasurement.Name = dto.Name;
+	    var unitOfMeasurementEntity = DbContext.Entry(unitOfMeasurement);
+	    DbContext.Entry(unitOfMeasurement).State = EntityState.Modified;
+
+	    try
+	    {
+		    await DbContext.SaveChangesAsync();
+	    }
+	    catch (DbUpdateConcurrencyException)
+	    {
+		    throw;
+	    }
+
+	    return Ok();
     }
 }
