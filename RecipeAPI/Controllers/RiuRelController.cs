@@ -21,9 +21,27 @@ public class RiuRelController : BaseController
     [HttpPost]
     public async Task<ActionResult<RiuRelModel>> PostRiuRel(RiuRelModel relation)
     {
-	   DbContext.RiuRels.Add(relation);
-	   await DbContext.SaveChangesAsync();
-	   return Ok(relation);
+	    var unitOfMeasurement = await DbContext.UnitsOfMeasurement.FindAsync(relation.UnitOfMeasurementId);
+	    if(unitOfMeasurement == null)
+	    {
+		    return BadRequest("UnitOfMeasurement doesnt exist.");
+	    }
+
+	    var recipe = await DbContext.Recipes.FindAsync(relation.RecipeId);
+	    if(recipe == null)
+	    {
+		    return BadRequest("Recipe doesnt exist.");
+	    }
+
+	    var ingredient = await DbContext.Ingredients.FindAsync(relation.IngredientId);
+	    if(ingredient == null)
+	    {
+		    return BadRequest("Ingredient doesnt exist.");
+	    }
+
+	    DbContext.RiuRels.Add(relation);
+	    await DbContext.SaveChangesAsync();
+	    return Ok(relation);
     }
 
     [HttpPut("{id}")]
