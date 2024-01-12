@@ -57,9 +57,7 @@ namespace RecipeAPI.Database
         public void PersistUser()
         {
                 //Persist User in secrets.json
-                //string newJsonContent = JsonSerializer.Serialize<DBUser>(user, new JsonSerializerOptions() { WriteIndented = true });
                 string newJsonContent = JsonSerializer.Serialize<DBUser>(this, new JsonSerializerOptions() { WriteIndented = true });
-                Console.WriteLine(newJsonContent);
                 File.WriteAllText("./secrets.json", newJsonContent);
         }
         public static DBUser ReadUser(string secretsContent)
@@ -98,7 +96,7 @@ namespace RecipeAPI.Database
             List<UserStates> states = this.ValidateUser().ToList();
             if (states.Count > 0)
             {
-                Console.WriteLine("Errors have been spotted mah man");
+                Console.WriteLine("Errors have occurred");
                 foreach(UserStates state in states)
                 {
                     Console.WriteLine($"Current State: {state}");
@@ -125,9 +123,8 @@ namespace RecipeAPI.Database
                 HandleUserState();
             }
             else
-                //Persist User
-                this.PersistUser();
                 Console.WriteLine("User fullfills validation criteria");
+                this.PersistUser();
         }
         public enum UserStates
         {
@@ -146,11 +143,11 @@ namespace RecipeAPI.Database
 
         public DBUserHandler()
         {
-            this.GetUserData();
+            this.RetrieveUserData();
             this.dbConnectionString = $"Server={dbUser.Server}; User={dbUser.Name}; Password={dbUser.Password}; Database={dbUser.Database}";
             this.TestConnection();
         }
-        public void GetUserData()
+        public void RetrieveUserData()
         {
             if (!File.Exists("./secrets.json"))
             {
@@ -164,29 +161,20 @@ namespace RecipeAPI.Database
             else
             {
                 Console.WriteLine("Secrets exists.");
-                //string asd = File.ReadAllText();
-                Console.WriteLine(File.ReadAllText("./secrets.json"));
                 string secretsContent = File.ReadAllText("./secrets.json");
                 try
                 {
                     DBUser? user = DBUser.ReadUser(secretsContent);
                     user.HandleUserState();
-                    user.PrintUserData();
                     this.dbUser = user;
                 }
                 catch (JsonException e)
                 {
                     Console.WriteLine(e.Message);
 
-                    //CreateUserEntry
                     DBUser user = DBUser.BuildUser();
                     user.HandleUserState();
-                    //Validate User
 
-                    //Persist User in secrets.json
-                    // string newJsonContent = JsonSerializer.Serialize<DBUser>(user, new JsonSerializerOptions() { WriteIndented = true });
-                    // Console.WriteLine(newJsonContent);
-                    // File.WriteAllText("./secrets.json", newJsonContent);
                     this.dbUser = user;
                 }
                 catch (Exception e)
@@ -213,7 +201,6 @@ namespace RecipeAPI.Database
                 Console.WriteLine("------------------------------");
                 Console.WriteLine("The given User is unable to connect.");
                 Console.WriteLine("Please check the User Data in the secrets.json");
-                //return;
                 throw new ArgumentException("Invalid User");
             }
         }
