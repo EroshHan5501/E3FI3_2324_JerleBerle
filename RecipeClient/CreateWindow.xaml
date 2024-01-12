@@ -39,7 +39,12 @@
         <Image Margin="83,13,653,0" Source="/Icons_Koch.png" Stretch="Fill" Grid.Row="1"/>
         <Image Margin="147,13,590,0" Source="/Icons_Koch.png" Stretch="Fill" Grid.Row="1"/>
         <Image Margin="219,13,513,2" Source="/Icons_Uhr.png" Stretch="Fill" Grid.Row="1" RenderTransformOrigin="-0.65,0.394"/>
-        <Label Content="33,3min&#xD;&#xA;" FontSize="28" Foreground="White" Margin="287,23,391,10" Grid.Row="1" />
+        <Label Content="33,3min&#xD;&#xA;" FontSize="28" Foreground="White" Margin="339,22,339,11" Grid.Row="1" />
         <Button Content="Button" Foreground="White" HorizontalAlignment="Left" Margin="609,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="159" Height="43" Background="#FF1C1C1C"/>
+        <Image Margin="40,12,690,0" Height="70" Width="70" Source="/static/Icons_Koch.png" Stretch="Fill" RenderTransformOrigin="0.997,1.019" Grid.Row="1"/>
+        <Image Margin="174,13,556,-1" Height="70" Width="70" Source="/static/Icons_Koch.png" Stretch="Fill" RenderTransformOrigin="0.997,1.019" Grid.Row="1"/>
+        <Image Margin="104,12,626,0" Height="70" Width="70" Source="/static/Icons_Koch.png" Stretch="Fill" RenderTransformOrigin="0.997,1.019" Grid.Row="1"/>
+        <Image Margin="253,12,477,0" Grid.Row="1" Source="/static/Icons_Uhr.png" Stretch="Fill" Height="70" Width="70" VerticalAlignment="Top" RenderTransformOrigin="0.521,-0.143"/>
+
     </Grid>
 </Window>
