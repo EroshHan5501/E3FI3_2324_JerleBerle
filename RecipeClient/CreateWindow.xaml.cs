@@ -33,12 +33,5 @@ namespace RecipeClient
         {
 
         }
-
-        private void SwitchToView(string viewFileName)
-        {
-            var viewUri = new Uri(viewFileName, UriKind.Relative);
-            var view = (UserControl)LoadComponent(viewUri);
-            contentControl.Content = view;
-        }
     }
 }
