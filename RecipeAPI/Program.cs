@@ -12,6 +12,9 @@ using System.Text.Json.Serialization;
 DBUserHandler userHandler = new DBUserHandler();
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
 
 builder.Services.AddDbContext<AppDbContext>(
@@ -65,17 +68,19 @@ WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseHttpLogging();
+	app.UseHttpLogging();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 app.UseMiddleware<ExceptionMiddlware>();
 
 app.UseCookiePolicy(new CookiePolicyOptions()
-{
-    HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
-    Secure = CookieSecurePolicy.Always,
-    MinimumSameSitePolicy = SameSiteMode.Strict
-});
+		{
+		HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+		Secure = CookieSecurePolicy.Always,
+		MinimumSameSitePolicy = SameSiteMode.Strict
+		});
 
 app.UseCors("recipePolicy");
 
