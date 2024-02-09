@@ -17,6 +17,7 @@ public class UserController : AdminBaseController
 
     }
 
+    [HttpGet]
     public async Task<IActionResult> Get([FromQuery] UserParameter parameter)
     {
         IQueryable<UserModel> query = DbContext.Users
