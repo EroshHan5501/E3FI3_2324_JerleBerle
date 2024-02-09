@@ -15,6 +15,6 @@ Da sich die Teams in ihren Bereichen stark spezialisiert hatten, erübrigt sich 
 
 ### API/Backend-Team
 Es hat ein konstruktiver Wissensaustausch stattgefunden, wodurch das Backendteam Erfahrungen austauschen und an anderen Baustellen arbeiten konnte.
-
+Erstellen einer Doku mittels Readme.md im Repo und Swagger.
 ### Client-Team
 -
